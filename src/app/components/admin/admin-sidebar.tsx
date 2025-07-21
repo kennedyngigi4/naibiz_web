@@ -19,7 +19,7 @@ export default function AdminSidebar() {
     <div className="col-xl-2 col-lg-3 col-md-12">
         <div className="user-dashboard-inner h-100 border-end border-2 py-5 p-3 d-lg-block d-none">
             <div className="dashboard_users mb-4">
-                <div className="square--80 circle mx-auto mb-1"><Image src='/img/team-2.jpg' width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid circle" alt="User Image"/></div>
+                <div className="square--80 circle mx-auto mb-1"><Image src='/icons/user.png' width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid circle" alt="User Image"/></div>
                 <div className="user-nameTitle text-center">
                     <h4 className="lh-base fw-semibold text-light mb-0">Welcome Back</h4>
                     <h6 className="text-light text-capitalize fw-medium opacity-75 mb-0">{session?.user?.name}</h6>

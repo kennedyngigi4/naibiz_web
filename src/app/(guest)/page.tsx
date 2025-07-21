@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import NavbarDark from "../components/navbar/navbar-dark";
 import FormOne from "../components/form/form-one";
@@ -11,8 +13,23 @@ import FooterTop from "../components/footer-top";
 import Footer from "../components/footer/footer";
 import BackToTop from "../components/back-to-top";
 import Malls from "../components/malls/malls";
+import FeaturedListingOne from "../components/featured-listing-one";
+import EnvironsListings from "../components/environs-listings";
+import { useEffect, useState } from "react";
+import APIServices from "../../../lib/services/api_services";
 
 export default function Home() {
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(()=>{
+        const fetchData = async() => {
+            const res = await APIServices.get("businesses/categories/");
+            setCategories(res);
+        }
+        fetchData();
+    }, [])
+
   return (
     <>
         <NavbarDark/>
@@ -36,11 +53,11 @@ export default function Home() {
                     </div>
                     <div className="col-xl-12 col-lg-12 col-md-12 col-md-12 col-12">
                         <div className="popularSearches d-flex align-items-center justify-content-center column-gap-3 row-gap-1 flex-wrap">
-                            <div className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">Real Estate</Link></div>	
-                            <div className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">Eat & Drink</Link></div>	
-                            <div className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">Shopping</Link></div>	
-                            <div className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">Nightlife</Link></div>	
-                            <div className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">Services</Link></div>	
+                            {categories.map((item: any, index: number) => (
+                                <div key={index} className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">{item.name}</Link></div>
+                            ))}
+                            	
+                            	
                         </div>
                     </div>
                 </div>
@@ -97,6 +114,8 @@ export default function Home() {
                 <PopularListingOne/>
             </div>
         </section>
+
+
         <section className="bg-light">
             <div className="container">
                 <div className="row align-items-center justify-content-center">
@@ -110,6 +129,21 @@ export default function Home() {
                <ClientOne/>
             </div>
         </section>
+
+        <section>
+            <div className="container">
+                <div className="row align-items-center justify-content-center">
+                    <div className="col-xl-7 col-lg-8 col-md-11 col-sm-12">
+                        <div className="secHeading-wrap text-center">
+                            <h3 className="sectionHeading">Featured <span className="text-primary">Listings</span></h3>
+                            <p>Explore Featured Business Listings</p>
+                        </div>
+                    </div>
+                </div>
+                <FeaturedListingOne />
+            </div>
+        </section>
+
         <section>
             <div className="container">
                 <div className="row align-items-center justify-content-center">
@@ -123,6 +157,22 @@ export default function Home() {
                 <BlogOne/>
             </div>
         </section>
+
+        
+        <section>
+            <div className="container">
+                <div className="row align-items-center justify-content-center">
+                    <div className="col-xl-7 col-lg-8 col-md-11 col-sm-12">
+                        <div className="secHeading-wrap text-center">
+                            <h3 className="sectionHeading">Businesses in Nairobi <span className="text-primary">Environs</span></h3>
+                            <p>Explore All Leading Businesses within Nairobi Environs.</p>
+                        </div>
+                    </div>
+                </div>
+                <EnvironsListings />
+            </div>
+        </section>
+
         <FooterTop/>
         <Footer/>
         <BackToTop/>

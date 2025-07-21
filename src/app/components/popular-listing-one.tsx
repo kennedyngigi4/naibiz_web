@@ -13,24 +13,6 @@ import { IconType } from 'react-icons';
 import { ListingModel } from '../../../lib/models/all_models';
 import APIServices from '../../../lib/services/api_services';
 
-interface ListData{
-    id: number;
-    image: string;
-    user: string;
-    status: string;
-    featured: boolean;
-    title: string;
-    desc: string;
-    call: string;
-    loction: string;
-    tag: string;
-    tagIcon: IconType;
-    tagIconStyle: string;
-    review: string;
-    rating: string;
-    ratingRate: string;
-    instantBooking: boolean;
-}
 
 export default function PopularListingOne() {
 
@@ -38,8 +20,8 @@ export default function PopularListingOne() {
 
     useEffect(() => {
         const fetchData = async() => {
-            const res = await APIServices.get("businesses/popular/");
-            console.log(res);
+            const res = await APIServices.get("businesses/home/?section=popular");
+            
             setPopularListings(res);
         }
         fetchData();

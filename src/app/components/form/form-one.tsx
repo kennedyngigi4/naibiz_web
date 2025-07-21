@@ -1,23 +1,29 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic';
 
 const Select = dynamic(()=>import('react-select'),{ssr:false});
 
 import { FaLocationDot } from 'react-icons/fa6'
 import { BiSearch } from 'react-icons/bi';
+import APIServices from '../../../../lib/services/api_services';
 
 export default function FormOne() {
-    const options = [
-        { value: '1', label: 'Eat & Drinking' },
-        { value: '2', label: 'Rental Property' },
-        { value: '3', label: 'Classifieds' },
-        { value: '4', label: 'Bank Services' },
-        { value: '5', label: 'Shopping' },
-        { value: '6', label: 'Fintess & Gym' },
-        { value: '7', label: 'Coaching' },
-        { value: '8', label: 'Other Services' },
-      ];
+    const [categories, setCategories] = useState([]);
+    
+    useEffect(()=>{
+        const fetchData = async() => {
+            const res = await APIServices.get("businesses/categories/");
+            const formatted = res.map((cat: any) => ({
+                value: cat.id,
+                label: cat.name
+            }));
+
+            setCategories(formatted);
+        }
+        fetchData();
+    }, []);
+
   return (
     <div className="row align-items-start justify-content-center mb-lg-5 mb-4">
         <div className="col-xl-11 col-lg-12 col-md-12 col-sm-12">
@@ -37,7 +43,7 @@ export default function FormOne() {
                     <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                         <div className="form-group fw-medium lights-bg no-border">
                             <div className="selects">
-                                <Select placeholder="Eat & Drinking" options={options} className="categories form-control border-0"/>
+                                <Select placeholder="Electronics Shop" options={categories} className="categories form-control border-0"/>
                             </div>
                         </div>
                     </div>

@@ -44,49 +44,7 @@ export default function DashboardReview() {
                                             </div>
                                             <div className="card-body p-0">
                                                 <ul className="dashboardListgroup hovereffect">
-                                                    {adminReview.map((item:AdminReview,index:number)=>{
-                                                        return(
-                                                            <li key={index}>
-                                                                <div className="singleReviewswrap">
-                                                                    <div className="singlereviews">
-                                                                        <div className="reviewerAvatar">
-                                                                            <figure className="m-0">
-                                                                                <Image src={item.image} width={80} height={80} className="img-fluid circle avatar-xl" alt="Avatar"/>
-                                                                            </figure>
-                                                                        </div>
-                                                                        
-                                                                        <div className="reviewsInfo">
-                                                                            <div className="reviewssupper d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
-                                                                                <div className="reviewsExtopper">
-                                                                                    <div className="reviewrHeadline d-flex align-items-center justify-content-start gap-2">
-                                                                                        <h6 className="messageuserTitle">{item.name}</h6> On <Link href="#" className="fw-medium text-primary">Blewr Cafe</Link>
-                                                                                    </div>
-                                                                                    <div className="postedDate"><span className="text-md">{item.date}</span></div>
-                                                                                </div>
-                                                                                <div className="flxLast">
-                                                                                    <div className="reviewsStar" data-rating="5">
-                                                                                        <BsStarFill className="me-1"/>
-                                                                                        <BsStarFill className="me-1"/>
-                                                                                        <BsStarFill className="me-1"/>
-                                                                                        <BsStarFill className="me-1"/>
-                                                                                        <BsStarHalf className=""/>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="reviewsBody">
-                                                                                <div className="reviewDescription d-block mb-3">
-                                                                                    <p className="m-0">{item.desc}</p>
-                                                                                </div>
-                                                                                <div className="reviewreply">
-                                                                                    <button type="button" className="btn btn-sm fw-medium btn-light-primary rounded-pill"  data-bs-toggle="modal" data-bs-target="#replyModal"><BsReply className="me-2"/>Rply to this review</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        )
-                                                    })}
+                                                    
                                                 </ul>
                                             </div>
                                         </div>
@@ -95,7 +53,7 @@ export default function DashboardReview() {
                                 
                                 <div className="row align-items-start g-4">
                                     <div className="col-xl-12 col-lg-12 col-md-12">
-                                        © {new Date().getFullYear()} ListingHub. Develop with <FaHeart className="ms-1 text-danger"></FaHeart>  By <Link href="https://shreethemes.in/" target="_blank">Shreethemes</Link>
+                                          © {new Date().getFullYear()} Nairobi Business. Develop with <FaHeart className="ms-1 text-danger"></FaHeart>  By <Link href="https://savannahsoftwaresolutions.co.ke/" target="_blank">Savannah Software Solutions</Link>
                                     </div>
                                 </div>
                             </div>

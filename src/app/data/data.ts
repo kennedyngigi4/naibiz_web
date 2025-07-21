@@ -469,15 +469,15 @@ export const adminCounter = [
     {
         icon:BsPinMapFill,
         iconStyle:'text-success',
-        number:23,
+        number:0,
         symbol:'',
-        title:'Active Listings',
+        title:'Listings',
         bg:'bg-light-success'
     },
     {
         icon:BsGraphUpArrow,
         iconStyle:'text-danger',
-        number:32,
+        number:0,
         symbol:'K',
         title:'Total Views',
         bg:'bg-light-danger'
@@ -485,7 +485,7 @@ export const adminCounter = [
     {
         icon:BsSuitHeart,
         iconStyle:'text-warning',
-        number:4,
+        number:0,
         symbol:'K',
         title:'Total Saved',
         bg:'bg-light-warning'
@@ -493,7 +493,7 @@ export const adminCounter = [
     {
         icon:BsYelp,
         iconStyle:'text-info',
-        number:88,
+        number:0,
         symbol:'',
         title:'Total Reviews',
         bg:'bg-light-info'

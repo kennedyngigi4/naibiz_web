@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { FaEye, FaFacebook, FaGooglePlusG } from 'react-icons/fa6'
 import  { loginUser } from '../../../../lib/services/auth_services';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function Login() {
 
@@ -37,9 +38,12 @@ export default function Login() {
 
         try {
             const res = await loginUser(loginData.email, loginData.password);
-            console.log(res);
+            
             if(res.success){
+                toast.success(res.message);
                 router.push("/dashboard");
+            } else {
+                toast.error(res.message);
             }
         } catch(e: any){
             setErrors("An error occurred");
