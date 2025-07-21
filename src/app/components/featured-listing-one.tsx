@@ -87,7 +87,7 @@ export default function FeaturedListingOne() {
                                         </div>
                                         <div className="listing-details">
                                             <h4 className="listingTitle"><Link href={`/${item.slug}`} className="titleLink">{item.name}<span className="verified"><BsPatchCheckFill className="bi bi-patch-check-fill m-0"/></span></Link></h4>
-                                            <p>{item.description}</p>
+                                            <p className='text-truncate'>{item.description}</p>
                                         </div>
                                         <div className="listing-info-details">
                                             <div className="d-flex align-items-center justify-content-start gap-2">
