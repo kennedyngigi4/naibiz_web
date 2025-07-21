@@ -15,7 +15,7 @@ export default function Footer() {
                 <div className="row">
                     <div className="col-12 col-md-5 col-lg-12 col-xl-4">
                         <div className="footer-widget pe-xl-4 mb-5">
-                            <div className="footerLogo"><Image src='/img/logo-light.svg' width={0} height={0} sizes='100vw' style={{width:'160px', height:'auto'}} className="img-fluid"  alt="Footer Logo"/></div>
+                            <div className="footerLogo"><Image src='/logo.png' width={0} height={0} sizes='100vw' style={{width:'160px', height:'auto'}} className="img-fluid"  alt="Footer Logo"/></div>
                             <div className="footerText"><p>© {new Date().getFullYear()} Nairobi Business. <br /> Develop with <FaHeart className="ms-1 text-danger"></FaHeart>  By Savannah Software Solutions</p></div>
                             <div className="footerSocialwrap">
                                 <ul className="footersocial">

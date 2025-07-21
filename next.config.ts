@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    domains: ["127.0.0.1", 'nairobibusiness.co.ke', ]
+    domains: ["127.0.0.1", 'nairobibusiness.co.ke', 'api.nairobibusiness.co.ke' ]
   },
   eslint: {
     ignoreDuringBuilds: true, // ✅ disables ESLint checks during production builds
