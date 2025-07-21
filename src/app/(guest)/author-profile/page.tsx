@@ -2,16 +2,16 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import NavLightThree from '../components/navbar/nav-light-three'
-import FooterTop from '../components/footer-top'
-import Footer from '../components/footer/footer'
-import BackToTop from '../components/back-to-top'
+import NavLightThree from '@/app/components/navbar/nav-light-three'
+import FooterTop from '@/app/components/footer-top'
+import Footer from '@/app/components/footer/footer'
+import BackToTop from '@/app/components/back-to-top'
 
 import { IconType } from 'react-icons'
 import { FaArrowLeft, FaArrowRight, FaHeart, FaLocationDot, FaStar } from 'react-icons/fa6'
 import { BsBrowserChrome, BsCoin, BsEnvelope, BsEnvelopeCheckFill, BsFacebook, BsInstagram, BsLightningChargeFill, BsPatchCheckFill, BsPersonCheck, BsPhone, BsSend, BsStarFill, BsStarHalf, BsTelephone, BsTwitter, BsWhatsapp, BsYoutube } from 'react-icons/bs'
 
-import { listData } from '../data/data'
+import { listData } from '@/app/data/data'
 
 interface ListData{
     id: number;
