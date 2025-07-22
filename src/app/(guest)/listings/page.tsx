@@ -18,24 +18,6 @@ import NavbarDark from '@/app/components/navbar/navbar-dark'
 import { ListingModel } from '../../../../lib/models/all_models'
 import APIServices from '../../../../lib/services/api_services'
 
-interface ListData {
-    id: number;
-    image: string;
-    user: string;
-    status: string;
-    featured: boolean;
-    title: string;
-    desc: string;
-    call: string;
-    loction: string;
-    tag: string;
-    tagIcon: IconType;
-    tagIconStyle: string;
-    review: string;
-    rating: string;
-    ratingRate: string;
-    instantBooking: boolean;
-}
 
 export default function ListLayoutTwo() {
 
@@ -43,8 +25,7 @@ export default function ListLayoutTwo() {
     
     useEffect(() => {
         const fetchData = async() => {
-            const res = await APIServices.get("businesses/popular/");
-            console.log(res);
+            const res = await APIServices.get("businesses/all/");
             setListings(res);
         }
         fetchData();
