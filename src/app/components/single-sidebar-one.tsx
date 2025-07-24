@@ -14,6 +14,8 @@ import { BiPhone } from 'react-icons/bi'
 import { FaMinus, FaPlus } from 'react-icons/fa6'
 import { IconType } from 'react-icons'
 import { HoursModel, ListingModel } from '../../../lib/models/all_models'
+import { toast } from 'react-toastify'
+import APIServices from '../../../lib/services/api_services'
 
 interface Personal{
     icon: IconType;
@@ -37,9 +39,11 @@ interface SingleSidebarOneProps  {
 
 export default function SingleSidebarOne({ business }: SingleSidebarOneProps) {
     const [selectedOptions, setSelectedOptions] = useState<object>([]);
-    const [guests, setGuests] = useState<boolean>(false);
-    const [adults, setAdults] = useState<number>(1);
-    const [children, setChildren] = useState<number>(0);
+    
+    const [bookingDate, setBookingDate] = useState("");
+    const [bookingTime, setBookingTime] = useState(null);
+    const [bookingMessage, setBookingMessage] = useState("");
+    const [loadingBooking, setLoadingBooking ] = useState(false);
 
     const social = [
         {
@@ -64,40 +68,57 @@ export default function SingleSidebarOne({ business }: SingleSidebarOneProps) {
         },
     ]
     
-  const options = [
-    { value: 'slice', label: 'Slice' },
-    { value: 'burger', label: 'Burger' },
-    { value: 'coffee', label: 'Coffee' },
-    { value: 'thali', label: 'Indian Thali' },
-    { value: 'tandoori', label: 'Tandoori' },
-    { value: 'chips', label: 'Chips' },
-  ];
+  
 
-  const option2 = [
-    { value: '1', label: '07:00 AM' },
-    { value: '2', label: '07:30 AM' },
-    { value: '3', label: '08:00 AM' },
-    { value: '4', label: '08:30 AM' },
-    { value: '5', label: '09:00 AM' },
-    { value: '6', label: '09:30 AM' },
-    { value: '7', label: '10:30 AM' },
-    { value: '8', label: '11:30 AM' },
-    { value: '9', label: '12:30 AM' },
-  ]
+    const option2 = [
+        { value: '07:00:00', label: '07:00 AM' },
+        { value: '07:30:00', label: '07:30 AM' },
+        { value: '08:00:00', label: '08:00 AM' },
+        { value: '08:30:00', label: '08:30 AM' },
+        { value: '09:00:00', label: '09:00 AM' },
+        { value: '09:30:00', label: '09:30 AM' },
+        { value: '10:30:00', label: '10:30 AM' },
+        { value: '11:30:00', label: '11:30 AM' },
+        { value: '12:30:00', label: '12:30 PM' }, // Fixed from AM to PM
+    ];
 
-  const timeTable = [
-    { day:'Monday', time:'8:00 Am To 10:00 PM'},
-    { day:'Tuesday', time:'8:00 Am To 10:00 PM'},
-    { day:'Wednesday', time:'8:00 Am To 10:00 PM'},
-    { day:'Thursday', time:'8:00 Am To 10:00 PM'},
-    { day:'Friday', time:'8:00 Am To 10:00 PM'},
-    { day:'Saturday', time:'8:00 Am To 10:00 PM'},
-    { day:'Sunday', time:'0:00 Am To 16:00 PM'},
-  ]
+  
 
   const handleChange = (selected:any) => {
-    setSelectedOptions(selected);
+    setBookingTime(selected);
   };
+
+
+  const handleBooking = async(e: any) => {
+    e.preventDefault();
+
+    setLoadingBooking(true);
+
+    const formData = new FormData();
+    formData.append("booking_date", bookingDate);
+    formData.append("booking_time", bookingTime?.value);
+    formData.append("booking_message", bookingMessage);
+    formData.append("business", business?.id);
+
+    try {
+        const res = await APIServices.post("messages/booking/", formData);
+        if(res.success){
+            toast.success(res.message);
+            setBookingTime("");
+            setBookingDate("");
+            setBookingMessage("");
+        } else {
+            toast.error(res.message);
+        }
+    } catch(e){
+        toast.error("An error occurred.");
+    } finally {
+        setLoadingBooking(false);
+    }
+
+  }
+
+
   return (
         <div className="sidebarGroups d-flex flex-column gap-4">
             
@@ -185,53 +206,54 @@ export default function SingleSidebarOne({ business }: SingleSidebarOneProps) {
             
             <div className="card overflow-visible">
                 <div className="card-header py-3">
-                    <div className="headerFirst"><h6><BsCalendar className="me-2"/>Book Your Table</h6></div>
+                    <div className="headerFirst"><h6><BsCalendar className="me-2"/>Book A Visit</h6></div>
                 </div>
                 <div className="p-xl-4 p-3">
                     <div className="contactForm position-relative">
+                        <form onSubmit={handleBooking}>
                         <div className="form-group form-border">
-                            <input type="text" className="form-control fw-medium" id="input" placeholder="Choose A Date"/>
+                            <input 
+                                type="date" 
+                                className="form-control fw-medium" 
+                                id="input" 
+                                name="bookingDate" 
+                                placeholder="Choose A Date"
+                                value={bookingDate}
+                                onChange={(e) => setBookingDate(e.target.value)}
+                            />
                         </div>
                         <div className="form-group form-border">
                             <div className="position-relative fw-medium">
-                                <Select
-                                    className="choosetime form-control"
-                                    options={option2}
-                                    />
+                                  <Select
+                                      className="choosetime form-control"
+                                      options={option2}
+                                      value={bookingTime}
+                                      onChange={handleChange}
+                                      placeholder="Select a time"
+                                      required
+                                  />
                             </div>
                         </div>
-                        <div className="form-group form-border">
-                            <div className="booking-form__input guests-input mixer-auto">
-                                <button name="guests-btn" id="guests-input-btn" onClick={()=>setGuests(!guests)}> <span>{adults} Guest</span> <span>{children} Children</span></button>
-                                <div className={`guests-input__options ${guests ? 'open' : ''}`} id="guests-input-options">
-                                    <div>
-                                        <span className="guests-input__ctrl minus" id="adults-subs-btn" onClick={()=>setAdults(adults - 1)} ><FaMinus className=""/></span>
-                                        <span className="guests-input__value"><span id="guests-count-adults">{adults}</span>Guests</span>
-                                        <span className="guests-input__ctrl plus" id="adults-add-btn" onClick={()=>setAdults(adults + 1)}><FaPlus className=""/></span>
-                                    </div>
-                                    <div>
-                                        <span className="guests-input__ctrl minus" id="children-subs-btn" onClick={()=>setChildren(children - 1 )}><FaMinus className=""/></span>
-                                        <span className="guests-input__value"><span id="guests-count-children">{children}</span>Children</span>
-                                        <span className="guests-input__ctrl plus" id="children-add-btn" onClick={()=>setChildren(children + 1 )}><FaPlus className=""/></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div className="form-group form-border">
                             <div className="position-relative fw-medium">
-                                <Select
-                                    className="features form-control"
-                                    isMulti
-                                    name="features"
-                                    options={options}
-                                    value={selectedOptions}
-                                    onChange={handleChange}
-                                    />
+                                <textarea 
+                                    className='form-control' 
+                                    placeholder="Enter message"
+                                    name="bookingMessage"
+                                    value={bookingMessage}
+                                    onChange={(e) => setBookingMessage(e.target.value)}    
+                                >
+                                    
+                                    </textarea>
                             </div>
                         </div>
                         <div className="form-group">
-                            <button type="button" className="btn btn-primary rounded-pill fw-medium w-100">Booking Request</button>
+                            <button type="submit" className="btn btn-primary rounded-pill fw-medium w-100">
+                                {loadingBooking ? "Sending ..." : "Booking Request"}
+                            </button>
                         </div>
+                        </form>
                     </div>
                 </div>
                 

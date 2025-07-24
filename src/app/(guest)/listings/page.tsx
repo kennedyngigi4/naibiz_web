@@ -26,6 +26,7 @@ export default function ListLayoutTwo() {
     useEffect(() => {
         const fetchData = async() => {
             const res = await APIServices.get("businesses/all/");
+            console.log(res);
             setListings(res);
         }
         fetchData();

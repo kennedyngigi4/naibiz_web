@@ -1,5 +1,7 @@
-import React from 'react'
-import Link from 'next/link'
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import AdminNavbar from '@/app/components/navbar/admin-navbar'
 import AdminSidebar from '@/app/components/admin/admin-sidebar'
@@ -10,26 +12,28 @@ import { bookingData } from '@/app/data/data'
 import { BsCheck2Circle, BsEnvelopeDash, BsX } from 'react-icons/bs'
 import { FaHeart } from 'react-icons/fa6'
 import Image from 'next/image'
-
-interface BookingData{
-    image: string;
-    title: string;
-    tag: string;
-    pending: boolean;
-    unpaid: boolean;
-    approved: boolean;
-    cancelled: boolean;
-    reject: boolean;
-    approve: boolean;
-    sendMsg: boolean;
-    date: string;
-    info: string;
-    name: string;
-    contact: string;
-    price: string;
-}
+import { useSession } from 'next-auth/react'
+import MerchantAPIServices from '../../../../lib/services/merchant_api_services';
 
 export default function MyBookings() {
+
+    const { data:session } = useSession();
+    const [bookings, setBooking ] = useState([]);
+
+
+    useEffect(() => {
+        const fetchData = async() => {
+            if(!session?.accessToken){
+                throw new Error("You must be logged in.");
+            }
+
+            const res = await MerchantAPIServices.get("businesses/merchant/bookings/", session?.accessToken);
+            console.log(res);
+            setBooking(res);
+        }
+        fetchData();
+    }, [session]);
+
   return (
     <>
         <AdminNavbar/>
@@ -55,8 +59,36 @@ export default function MyBookings() {
                                                 <h4 className="m-0">Recent Bookings</h4>
                                             </div>
                                             <div className="card-body p-0">
-                                                <ul className="dashboardListgroup">
-                                                    
+                                                  <ul className="dashboardListgroup">
+                                                      {bookings.map((item: any, index: number) => {
+                                                          return (
+                                                              <li key={index}>
+                                                                  <div className="bookingActivities">
+                                                                      <div className="d-flex align-items-start justify-content-start gap-3 flex-wrap">
+                                                                          <div className="bookingAvatar">
+                                                                            <figure className="m-0">
+                                                                                <Image src="/icons/user.png" width={80} height={80} className="img-fluid circle avatar-xl" alt="Avatar" />
+                                                                            </figure>
+                                                                          </div>
+
+                                                                          <div className="bookingInfo">
+                                                                              <div className="bookingTitle">
+                                                                                  <h5 className="titlesName">{item.businessname}</h5>
+                                                                                  
+                                                                              </div>
+                                                                              <div className="bookingDetails">
+                                                                                  <div className="singledetailInfo"><span className="listTitle">Booking Date</span>{item?.booking_date}</div>
+                                                                                  <div className="singledetailInfo"><span className="listTitle">Booking Time</span>{item?.booking_time}</div>
+                                                                                  <div className="singledetailInfo"><span className="listTitle">Message</span>{item.booking_message}</div>
+                                                                                  
+                                                                              </div>
+                                                                              
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </li>
+                                                          )
+                                                      })}
                                                 </ul>
                                             </div>
                                         </div>

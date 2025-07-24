@@ -27,6 +27,30 @@ export type MallModel = {
 }
 
 
+export type ProductModel = {
+    id: string;
+    name: string;
+    price: string;
+    main_image: string;
+    description: string;
+}
+
+
+export type ImageModel = {
+    id: string;
+    business: string;
+    image: string;
+}
+
+
+export type ReviewModel = {
+    title: string;
+    message: string;
+    email: string;
+    rating: string;
+    created_at: string;
+}
+
 export type ListingModel = {
     id: string;
     slug: string;
@@ -55,6 +79,9 @@ export type ListingModel = {
     is_open: boolean,
     created_by: OwnerModel,
     hours: HoursModel,
+    products: ProductModel,
+    gallery: ImageModel,
+    reviews: ReviewModel,
 }
 
 

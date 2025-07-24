@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { IconType } from 'react-icons';
 
@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay,Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import APIServices from '../../../lib/services/api_services';
 
 interface ReviewData{
     rate: IconType[];
@@ -20,6 +21,17 @@ interface ReviewData{
 }
 
 export default function ClientOne() {
+
+    const [ reviews, setReviews ] = useState([]);
+
+    useEffect(()=>{
+        const fetchData = async() => {
+            const reviews = await APIServices.get("blogs/company_reviews/");
+            setReviews(reviews);
+        }
+        fetchData();
+    }, [])
+
   return (
         <div className="row align-items-center justify-content-center">
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -37,7 +49,7 @@ export default function ClientOne() {
                             1440: { slidesPerView: 4 },
                           }}
                         >
-                    {reviewData.map((item:ReviewData,index:number)=>{
+                        {reviews.map((item:any,index:number)=>{
                         return(
                             <SwiperSlide className="singleItem" key={index}>
                                 <div className="reviews-wrappers">
@@ -45,16 +57,16 @@ export default function ClientOne() {
                                         <div className="card-body p-xl-5 p-lg-5 p-4">
                                             <div className="reviews-topHeader d-flex flex-column mb-3">
                                                 <div className="d-flex align-items-center justify-content-center mb-2">
-                                                    {item.rate.map((el,index)=>{
+                                                    {/* {item?.rate?.map((el: any,index: React.Key | null | undefined)=>{
                                                         let Icon = el
                                                         return(
                                                             <span className="me-1 text-sm text-warning" key={index}><Icon className=""/></span>
                                                         )
-                                                    })}
+                                                    })} */}
                                                 </div>
                                                 <div className="revws-desc text-center">
                                                     <p className="text-dark fw-semibold mb-1">{item.title}</p>
-                                                    <p className="m-0 text-dark">{item.desc}</p>
+                                                    <p className="m-0 text-dark">{item.content}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,10 +74,10 @@ export default function ClientOne() {
                                     </div>
                                     <div className="reviewsers d-flex flex-column mt-5">
                                         <div className="d-flex align-items-center flex-column flex-thumbes gap-2">
-                                            <div className="revws-pic"><Image src={item.image} width={0} height={0} sizes='100vw' style={{width:'55px', height:'auto'}} className="img-fluid circle" alt=""/></div>
+                                            <div className="revws-pic"><Image src="/icons/user.png" width={0} height={0} sizes='100vw' style={{width:'55px', height:'auto'}} className="img-fluid circle" alt=""/></div>
                                             <div className="revws-caps text-center">
-                                                <h6 className="fw-medium fs-6 m-0">{item.name}</h6>
-                                                <p className="text-muted-2 text-md m-0">{item.position}</p>
+                                                <h6 className="fw-medium fs-6 m-0">{item.client_name}</h6>
+                                                <p className="text-muted-2 text-md m-0">{item.client_designation}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -8,68 +8,16 @@ import {BsBasket2Fill } from 'react-icons/bs'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay,Pagination } from 'swiper/modules';
 import 'swiper/css';
+import { ListingModel, ProductModel } from '../../../../lib/models/all_models';
 
-interface Data{
-    image: string;
-    status: string;
-    title: string;
-    value: string;
-    offerValue: string;
-    offer: boolean;
+
+interface ProductsProps {
+    business: ListingModel;
 }
 
-const data = [
-    {
-        image:'/images/products/1.jpg',
-        status:'Sold',
-        title:'Wooden Flop Vase',
-        value:'KSh 5740',
-        offerValue:'-30 Off',
-        offer:false
-    },
-    {
-        image: '/images/products/1.jpg',
-        status:'Hot',
-        title:'Sandlwood Vase',
-        value:'KSh 2956',
-        offerValue:'-30 Off',
-        offer:true
-    },
-    {
-        image: '/images/products/1.jpg',
-        status:'New',
-        title:'Sonalik Vase Cast',
-        value:'KSh 5242',
-        offerValue:'-30 Off',
-        offer:false
-    },
-    {
-        image: '/images/products/1.jpg',
-        status:'Hot',
-        title:'Causio Matt Vase',
-        value:'KSh 3560',
-        offerValue:'-28 Off',
-        offer:true
-    },
-    {
-        image: '/images/products/1.jpg',
-        status:'New',
-        title:'Venila Flower Vase',
-        value:'KSh 4120',
-        offerValue:'-30 Off',
-        offer:false
-    },
-    {
-        image: '/images/products/1.jpg',
-        status:'Hot',
-        title:'Prodcast Vase',
-        value:'KSh 5056',
-        offerValue:'-25 Off',
-        offer:true
-    },
-]
+export default function Products({ business }: ProductsProps) {
+    console.log(business?.products);
 
-export default function Products() {
   return (
         <div className="listingSingleblock mb-4" id="productss">
             <div className="SingleblockHeader">
@@ -92,12 +40,12 @@ export default function Products() {
                         1440: { slidesPerView: 3 },
                     }}
                 >
-                {data.map((item:Data,index:number)=>{
+                {business?.products?.map((product:ProductModel)=>{
                     return(
-                        <SwiperSlide className="singleItem" key={index}>
+                        <SwiperSlide className="singleItem" key={product?.id}>
                             <div className="catalogCard">
                                 <div className="catalogThumb position-relative">
-                                    {item.status === "Sold" && 
+                                    {/* {product.status === "Sold" && 
                                         <div className="position-absolute top-0 start-0 mt-3 ms-3"><span className="badge badge-xs bg-dark text-uppercase">Sold</span></div>
                                     }
                                     {item.status === "Hot" && 
@@ -105,10 +53,10 @@ export default function Products() {
                                     }
                                     {item.status === "New" && 
                                         <div className="position-absolute top-0 start-0 mt-3 ms-3"><span className="badge badge-xs bg-seegreen text-uppercase">New</span></div>
-                                    }
+                                    } */}
                                     <Link href="#">
                                         <figure>	
-                                            <Image src={item.image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid rounded-2" alt="Product Thumb"/>
+                                            <Image src={product?.main_image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid rounded-2" alt="Product Thumb"/>
                                         </figure>
                                     </Link>
                                 </div>
@@ -116,11 +64,14 @@ export default function Products() {
                                 <div className="catalogCaps">
                                     <div className="d-flex align-items-start justify-content-between gap-2">
                                         <div className="catalogProducttitle">
-                                            <h6 className="lh-base m-0">{item.title}</h6>
-                                            <p className="text-md d-flex align-items-center gap-2 m-0"><span>{item.value}</span>{item.offer && <span className="text-success">{item.offerValue}</span>}</p>
+                                            <h6 className="lh-base m-0">{product.name}</h6>
+                                            <p className="text-md d-flex align-items-center gap-2 m-0"><span>KSh. {parseInt(product.price).toLocaleString()}</span></p>
                                         </div>
                                         <div className="addCart">
-                                            <Link href="#" className="text-muted-2 square--40 circle bg-light" data-bs-toggle="tooltip" data-bs-title="Add To Cart"><BsBasket2Fill /></Link>
+                                            {business?.whatsapp && (
+                                                <Link href={`${business?.whatsapp}`} target='_blank' className="text-muted-2 square--40 circle bg-light" data-bs-toggle="tooltip" data-bs-title="Add To Cart"><BsBasket2Fill /></Link>
+                                            )}
+                                            
                                         </div>
                                     </div>
                                 </div>

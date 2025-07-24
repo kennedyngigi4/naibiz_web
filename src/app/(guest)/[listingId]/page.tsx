@@ -28,6 +28,7 @@ import { listData } from '@/app/data/data';
 import NavbarDark from '@/app/components/navbar/navbar-dark';
 import { ListingModel } from '../../../../lib/models/all_models';
 import APIServices from '../../../../lib/services/api_services';
+import { toast } from 'react-toastify';
 
 
 
@@ -37,6 +38,8 @@ export default function Page() {
     const id: any = params.listingId;
     let data = listData.find((item) => item.id === parseInt(id))
     const [ businessData, setBusinessData] = useState<ListingModel>();
+    const [ message, setMessage ] = useState("");
+    
 
     useEffect(() => {
         const fetchData = async() => {
@@ -46,6 +49,32 @@ export default function Page() {
         }
         fetchData();
     }, []);
+
+
+    const handleMessage = async(e: any)=> {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("content", message);
+        if(businessData){
+            formData.append("business", businessData?.id);
+        }
+
+        try {
+            const res = await APIServices.post("messages/send_message/", formData);
+            if(res.success){
+                toast.success(res.message);
+                setMessage("");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 6000);
+            } else {
+                toast.error(res.message);
+            }
+        } catch(e){
+            toast.error(e);
+        } 
+    }
 
     return (
         <>
@@ -114,18 +143,26 @@ export default function Page() {
                                 <Descriptions business={businessData} />
 
                                 {/* <Pricings /> */}
-
-                                <Products />
+                                {businessData?.products && (
+                                    <Products business={businessData} />
+                                )}
+                                
 
                                 {/* <Features /> */}
 
-                                <Galleries />
+                                {businessData?.gallery && (
+                                    <Galleries business={businessData} />
+                                )}
 
-                                <Maps latitude={businessData?.latitude} longitude={businessData?.longitude} label={businessData?.location} />
+                                
+                                {(businessData?.latitude && businessData?.longitude)  && (
+                                    <Maps latitude={businessData?.latitude} longitude={businessData?.longitude} label={businessData?.location} />
+                                )}
+                                
 
                                 <Statistics />
 
-                                <Reviews />
+                                <Reviews business={businessData} />
 
                                 <List />
 
@@ -152,12 +189,19 @@ export default function Page() {
                             <Link href="#" data-bs-dismiss="modal" aria-label="Close" className="square--40 circle bg-light-danger text-danger"><BsX className="bi bi-x" /></Link>
                         </div>
                         <div className="modal-body p-md-5">
+                            <form onSubmit={handleMessage}>
                             <div className="messageForm">
                                 <div className="form-group form-border">
-                                    <textarea className="form-control" placeholder="Type your Message To Dan"></textarea>
+                                    <textarea 
+                                        className="form-control" 
+                                        placeholder="Type your Message To Dan"
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                    ></textarea>
                                 </div>
-                                <button type="button" className="btn btn-primary fw-medium px-md-5">Send message<FiArrowRight className="ms-2" /></button>
+                                <button type="submit" className="btn btn-primary fw-medium px-md-5">Send message<FiArrowRight className="ms-2" /></button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>

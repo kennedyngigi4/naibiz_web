@@ -18,7 +18,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import { Autocomplete, LoadScript } from '@react-google-maps/api';
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyBokOAOu4V_1D3aJJH6LMjIg-4U1eQxrFs";
+const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 export default function AddListing() {
 

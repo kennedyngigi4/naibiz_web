@@ -10,7 +10,7 @@ import BackToTop from '@/app/components/back-to-top'
 
 import { adminListing } from '@/app/data/data'
 
-import { BsCheck2Circle, BsStarFill, BsStarHalf, BsX } from 'react-icons/bs'
+import { BsBox2, BsCheck2Circle, BsStarFill, BsStarHalf, BsX } from 'react-icons/bs'
 import { FaHeart } from 'react-icons/fa6'
 import { useSession } from 'next-auth/react'
 import MerchantAPIServices from '../../../../lib/services/merchant_api_services'
@@ -26,13 +26,13 @@ interface AdminListing{
 
 export default function MyListings() {
 
-    const { data:session } = useSession();
+    const { data:session, status } = useSession();
     const [ listings, setListings ] = useState<ListingModel[]>([]);
 
 
     useEffect(() => {
         const fetchData = async() => {
-            
+            if(status === "unauthenticated") return;
             if(!session?.accessToken){
                 throw new Error("You must be logged in.")
             }
@@ -104,8 +104,9 @@ export default function MyListings() {
                                                                         </div>
                                                                         <div className="mngListinlast">
                                                                             <div className="d-flex align-items-center justify-content-start gap-3">
-                                                                                <Link href={`/dashboard/${item.slug}`} className="btn btn-sm btn-light-success fw-medium rounded-pill"><BsCheck2Circle className="me-1"/>Edit</Link>
+                                                                                <Link href={`/dashboard/edit/${item.slug}`} className="btn btn-sm btn-light-success fw-medium rounded-pill"><BsCheck2Circle className="me-1"/>Edit</Link>
                                                                                 <Link href="#" className="btn btn-sm btn-light-danger fw-medium rounded-pill"><BsX className="me-1"/>Delete</Link>
+                                                                                <Link href={`/dashboard/products/${item.slug}`} className="btn btn-sm btn-light-info fw-medium rounded-pill"><BsBox2 className="me-1" />Products</Link>
                                                                             </div>
                                                                         </div>
                                                                     </div>

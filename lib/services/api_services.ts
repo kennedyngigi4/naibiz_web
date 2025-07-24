@@ -6,9 +6,6 @@ const APIServices = {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/${url}`, {
                 method: "POST",
-                headers: {
-                    
-                },
                 body: formData
             });
 

@@ -12,18 +12,21 @@ import { FaFile, FaHeart } from 'react-icons/fa6'
 import { BsArrowRightCircle, BsFeather, BsGeoAlt, BsImages, BsPatchQuestionFill, BsPhoneFlip, BsPlusCircle, BsStopwatch, BsX } from 'react-icons/bs'
 import BackToTop from '@/app/components/back-to-top'
 import { useSession } from 'next-auth/react'
-import MerchantAPIServices from '../../../../lib/services/merchant_api_services'
-import APIServices from '../../../../lib/services/api_services'
+import MerchantAPIServices from '../../../../../lib/services/merchant_api_services'
+import APIServices from '../../../../../lib/services/api_services'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { Autocomplete, LoadScript } from '@react-google-maps/api';
+import { FiArrowRight } from 'react-icons/fi'
+import { ListingModel } from '../../../../../lib/models/all_models'
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyBokOAOu4V_1D3aJJH6LMjIg-4U1eQxrFs";
+const GOOGLE_MAPS_API_KEY = `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
 
 export default function AddListing() {
 
     const {data:session } = useSession();
     const router = useRouter();
+    const params = useParams();
     const [malls, setMalls] = useState([]);
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubCategories] = useState([]);
@@ -37,6 +40,21 @@ export default function AddListing() {
     const [autocompleteRef, setAutocompleteRef] = useState<google.maps.places.Autocomplete | null>(null);
     const [location, setLocation] = useState("");
     const [latLng, setLatLng] = useState({ lat: null, lng: null });
+
+
+    const [businessData, setBusinessData] = useState<ListingModel>();
+
+    
+    useEffect(() => {
+        const fetchData = async() => {
+            if(!session?.accessToken){
+            throw new Error("You must be logged in");
+            }
+            const res = await MerchantAPIServices.get(`businesses/merchant/listing/${params.listingSlug}/`, session?.accessToken);
+            setBusinessData(res);
+        }
+    fetchData();
+    }, [session, params]);
 
     const onLoad = (autocomplete: google.maps.places.Autocomplete) => {
         setAutocompleteRef(autocomplete);
@@ -94,6 +112,8 @@ export default function AddListing() {
         main_banner: "",
         profile_image: "",
     });
+
+    
 
     const [hours, setHours ] = useState({
         monday: { opening: "", closing: "", },
@@ -285,6 +305,10 @@ export default function AddListing() {
     }
 
 
+    const handleProductUpload = async() => {
+
+    }
+
   return (
     <>
         <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -297,8 +321,19 @@ export default function AddListing() {
                     <div className="col-xl-10 col-lg-9 col-md-12 pt-lg-0 pt-5">
                         <div className="user-dashboard-box bg-light">
                             
-                            <div className="dashHeader p-xl-5 p-4 pb-xl-0 pb-0 py-lg-0 py-5">
-                                <h2 className="fw-medium mb-0">Edit Listing</h2>
+                            <div className='row'>
+                                <div className="col-xl-8 col-lg-8 col-md-8 col-12">
+                                    <div className="dashHeader p-xl-5 p-4 pb-xl-0 pb-0 py-lg-0 py-5">
+                                        <h4 className="fw-medium mb-0">Edit {businessData?.name}</h4>
+                                    </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-4 col-12 float-end">
+                                    <div className="dashHeader p-xl-5 p-4 pb-xl-0 pb-0 py-lg-0 py-5">
+                                        <Link href={`/dashboard/gallery/${businessData?.slug}`}>
+                                        <button className="btn btn-sm btn-light-info fw-medium rounded-pill"><BsImages className='pe-4' /> Add Gallery</button>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
                             
                             <form onSubmit={handleSubmit}>
@@ -673,6 +708,8 @@ export default function AddListing() {
         </section>
         <BackToTop/>
         </LoadScript>
+
+        
     </>
   )
 }

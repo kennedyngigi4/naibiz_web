@@ -16,7 +16,7 @@ import { IconType } from 'react-icons'
 import { useSession } from 'next-auth/react'
 import { ListingModel } from '../../../lib/models/all_models'
 import MerchantAPIServices from '../../../lib/services/merchant_api_services'
-import { BsCheck2Circle, BsStarFill, BsStarHalf, BsX } from 'react-icons/bs';
+import { BsBox2, BsCheck2Circle, BsStarFill, BsStarHalf, BsX } from 'react-icons/bs';
 
 interface Counter{
     icon: IconType;
@@ -46,7 +46,7 @@ interface InvoiceData{
 export default function Dashboarduser() {
     const {data:session, status} = useSession();
     const [listings, setListings] = useState<ListingModel[]>([]);
-
+    const [statistics, setStatistics] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,11 +55,14 @@ export default function Dashboarduser() {
                 throw new Error("You must be logged in.")
             }
             const res = await MerchantAPIServices.get("businesses/merchant/all_listings/", session?.accessToken);
-           
+            const statistics = await MerchantAPIServices.get("businesses/merchant/statistics/", session?.accessToken);
             setListings(res);
+            setStatistics(statistics);
+            console.log(statistics);
         }
         fetchData();
     }, [session]);
+
 
   return (
     <>
@@ -84,14 +87,15 @@ export default function Dashboarduser() {
                                     </div>
                                 </div>
                                 <div className="row align-items-start g-4 mb-lg-5 mb-4">
-                                    {adminCounter.map((item:Counter,index:number)=>{
-                                        let Icon = item.icon
+                                    {statistics.map((item:any,index:number)=>{
+                                        let Icon = item.icon.toString().replace('"', "")
+                                        
                                         return(
                                             <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6" key={index}>
                                                 <div className="card rounded-3 position-relative p-4">
                                                     <div className={`position-absolute w-30 h-100 start-0 top-0 rounded-end-pill ${item.bg}`}><div className="position-absolute top-50 start-50 translate-middle"><Icon className={`fs-2 ${item.iconStyle}`}></Icon></div></div>
                                                     <div className="d-flex flex-column align-items-end justify-content-end ht-80">
-                                                        <h2 className="mb-0"><CountUp className="ctr" end={item.number}/>{item.symbol}</h2>
+                                                        <h2 className="mb-0"><CountUp className="ctr" end={item.count}/></h2>
                                                         <p className="text-muted-2 fw-medium mb-0">{item.title}</p>
                                                     </div>
                                                 </div>
@@ -141,8 +145,9 @@ export default function Dashboarduser() {
                                                                     </div>
                                                                     <div className="mngListinlast">
                                                                         <div className="d-flex align-items-center justify-content-start gap-3">
-                                                                            <Link href={`/dashboard/${item.slug}`} className="btn btn-sm btn-light-success fw-medium rounded-pill"><BsCheck2Circle className="me-1"/>Edit</Link>
+                                                                            <Link href={`/dashboard/edit/${item.slug}`} className="btn btn-sm btn-light-success fw-medium rounded-pill"><BsCheck2Circle className="me-1"/>Edit</Link>
                                                                             <Link href="#" className="btn btn-sm btn-light-danger fw-medium rounded-pill"><BsX className="me-1"/>Delete</Link>
+                                                                            <Link href={`/dashboard/products/${item.slug}`} className="btn btn-sm btn-light-info fw-medium rounded-pill"><BsBox2 className="me-1" />Products</Link>
                                                                         </div>
                                                                     </div>
                                                                 </div>
