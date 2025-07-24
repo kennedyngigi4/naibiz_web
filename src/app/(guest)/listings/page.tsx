@@ -35,7 +35,7 @@ export default function ListLayoutTwo() {
         if (newFilters.rating) queryParams.append("rating", newFilters.rating.toString());
 
         const res = await APIServices.get(`businesses/all/?${queryParams.toString()}`);
-        console.log(res);
+        
         setListings(res.results);
         setTotalPages(Math.ceil(res.count / 20));
         setCurrentPage(page);
@@ -60,7 +60,7 @@ export default function ListLayoutTwo() {
                     <div className="row align-items-center justify-content-between mb-4">
                         <div className="col-xl- 5 col-lg-5 col-md-5 col-sm-6 col-6">
                             <div className="totalListingshow">
-                                <h6 className="fw-medium mb-0">106 Listings Founds</h6>
+                                <h6 className="fw-medium mb-0">{listings.length} Listings Found</h6>
                             </div>
                         </div>
 
