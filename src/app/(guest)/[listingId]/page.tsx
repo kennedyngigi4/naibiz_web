@@ -103,13 +103,13 @@ export default function Page() {
                                                     <div className="d-flex align-items-center justify-content-start flex-wrap gap-2">
                                                         <div className="flexItem me-2"><span className="text-md fw-medium text-light d-flex align-items-center"><FaLocationDot className="me-2" />{businessData && businessData.location}</span></div>
                                                         <div className="flexItem me-2"><span className="text-md fw-medium text-light d-flex align-items-center"><BiBriefcase className="me-2" />{data && data.tag}</span></div>
-                                                        <div className="flexItem me-2"><span className="text-md fw-medium text-light">$$$</span></div>
+                                                        {/* <div className="flexItem me-2"><span className="text-md fw-medium text-light">$$$</span></div> */}
                                                         <div className="flexItem">
                                                             <div className="d-flex align-items-center justify-content-start gap-2">
                                                                 <div className="d-flex align-items-center justify-content-start gap-1">
                                                                     <BsStarFill className="text-warning text-sm" /><BsStarFill className="text-warning text-sm" /><BsStarFill className="text-warning text-sm" /><BsStarFill className="text-warning text-sm" /><BsStarHalf className="text-warning text-sm" />
                                                                 </div>
-                                                                <span className="text-md fw-medium text-light">{`(${data && data.review})`}</span>
+                                                                {/* <span className="text-md fw-medium text-light">{`(${data && data.review})`}</span> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -119,10 +119,7 @@ export default function Page() {
                                     </div>
                                     <div className="lastColumn">
                                         <div className="d-flex align-items-center justify-content-md-end flex-wrap gap-3">
-                                            <div className="flexStart Priceinfo d-flex flex-column">
-                                                <span className="fw-medium text-light">Price Range</span>
-                                                <span className="fw-bold fs-6 text-light">$25 - $50</span>
-                                            </div>
+                                            
                                             <div className="flexlastButton"><button type="button" className="btn px-4 btn-whites text-primary fw-medium" data-bs-toggle="modal" data-bs-target="#messageModal"><BsSendCheck className="me-2" />Send Message</button></div>
                                         </div>
                                     </div>

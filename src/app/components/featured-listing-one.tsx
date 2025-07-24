@@ -58,11 +58,9 @@ export default function FeaturedListingOne() {
                                                 <div className="d-flex align-items-center justify-content-start gap-2">
                                                     {item.is_open ? (<span className="badge badge-xs text-uppercase listOpen">Open</span>) :(<span className="badge badge-xs text-uppercase listClose">Closed</span>)}
 
-                                                    <span className="badge badge-xs badge-transparent">$$$</span>
-
-                                                    {/* {item.featured === true && 
-                                                        <span className="badge badge-xs badge-transparent"><BsStar className="mb-0 me-1"/>Featured</span>
-                                                    } */}
+                                                    {item?.section && 
+                                                        <span className="badge badge-xs badge-transparent text-capitalize"><BsStar className="mb-0 me-1" />{item.section}</span>
+                                                    }
                                                 </div>
                                             </div>
                                             <Image src={item.main_banner} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid" alt="Listing Image"/>
