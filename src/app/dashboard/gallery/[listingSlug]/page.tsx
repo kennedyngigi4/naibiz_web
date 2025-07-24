@@ -32,8 +32,11 @@ const GalleryPage = () => {
             const res = await MerchantAPIServices.get(`businesses/merchant/listing/${params.listingSlug}/`, session?.accessToken);
             setBusinessData(res);
 
-            const images = await MerchantAPIServices.get(`businesses/merchant/gallery/?business=${businessData?.id}`, session?.accessToken);
-            setGallery(images);
+            if(businessData){
+                const images = await MerchantAPIServices.get(`businesses/merchant/gallery/?business=${businessData?.id}`, session?.accessToken);
+                setGallery(images);
+            }
+            
         }
         fetchData();
     }, [session, params, businessData]);
