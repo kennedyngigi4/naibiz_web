@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -12,6 +12,8 @@ import 'swiper/css';
 
 import { BsGeoAlt, BsPatchCheckFill, BsStar, BsStarFill, BsSuitHeart, BsTelephone } from 'react-icons/bs';
 import { IconType } from 'react-icons';
+import APIServices from '../../../../lib/services/api_services';
+import { ListingModel } from '../../../../lib/models/all_models';
 
 interface ListData{
     id: number;
@@ -32,7 +34,24 @@ interface ListData{
     instantBooking: boolean;
 }
 
-export default function List() {
+
+interface ListProps {
+    business: ListingModel;
+}
+
+export default function List({ business }: ListProps) {
+    const [ similar, setSimilar] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async() => {
+            const res = await APIServices.get(`businesses/similar_businesses/?category=${business?.category}`);
+            console.log(res);
+            setSimilar(res);
+        }
+        fetchData();
+        
+    },[business]);
+
   return (
         <div className="listingSingleblock">
             <div className="SingleblockHeader">
@@ -56,8 +75,8 @@ export default function List() {
                             1440: { slidesPerView: 2 },
                         }}
                     >
-                    {listData.map((item:ListData,index:number)=>{
-                        let Icon = item.tagIcon
+                    {similar.map((item:ListingModel,index:number)=>{
+                        // let Icon = item.tagIcon
                         return(
                             <SwiperSlide className="singleItem" key={index}>
                                 <div className="listingitem-container">
@@ -69,28 +88,28 @@ export default function List() {
                                             <Link href="#" className="topLink">
                                                 <div className="position-absolute start-0 top-0 ms-3 mt-3 z-2">
                                                     <div className="d-flex align-items-center justify-content-start gap-2">
-                                                        {item.status === 'open' ? (<span className="badge badge-xs text-uppercase listOpen">Open</span>) :(<span className="badge badge-xs text-uppercase listClose">Closed</span>)}
+                                                        {item.is_open ? (<span className="badge badge-xs text-uppercase listOpen">Open</span>) :(<span className="badge badge-xs text-uppercase listClose">Closed</span>)}
     
                                                         <span className="badge badge-xs badge-transparent">$$$</span>
     
-                                                        {item.featured === true && 
-                                                            <span className="badge badge-xs badge-transparent"><BsStar className="mb-0 me-1"/>Featured</span>
+                                                        {item.section  && 
+                                                            <span className="badge badge-xs badge-transparent"><BsStar className="mb-0 me-1" />{item.section}</span>
                                                         }
                                                     </div>
                                                 </div>
-                                                <Image src={item.image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid" alt="Listing Image"/>
+                                                <Image src={item.main_banner} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid" alt="Listing Image"/>
                                             </Link>
                                             <div className="opssListing position-absolute start-0 bottom-0 ms-3 mb-4 z-2">
                                                 <div className="d-flex align-items-center justify-content-between gap-2">
                                                     <div className="listing-avatar">
-                                                        <Link href="#" className="avatarImg"><Image src={item.user} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid circle" alt="Avatar"/></Link>
+                                                        <Link href="#" className="avatarImg"><Image src={item.profile_image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid circle" alt="Avatar"/></Link>
                                                     </div>
                                                     <div className="listing-details">
-                                                        <h4 className="listingTitle"><Link href="#" className="titleLink">The Big Bumbble Gym<span className="verified"><BsPatchCheckFill className="bi bi-patch-check-fill m-0"/></span></Link></h4>
+                                                        <h4 className="listingTitle"><Link href="#" className="titleLink">{item.name}<span className="verified"><BsPatchCheckFill className="bi bi-patch-check-fill m-0"/></span></Link></h4>
                                                         <div className="list-infos">
                                                             <div className="gap-3 mt-1">
-                                                                <div className="list-distance text-light d-flex align-items-center"><BsGeoAlt className="mb-0 me-2"/>Jakarta, USA</div>
-                                                                <div className="list-calls text-light hide-mob mt-1 d-flex align-items-center"><BsTelephone className="mb-0 me-2"/>{item.call}</div>
+                                                                <div className="list-distance text-light d-flex align-items-center"><BsGeoAlt className="mb-0 me-2"/>{item.location}</div>
+                                                                <div className="list-calls text-light hide-mob mt-1 d-flex align-items-center"><BsTelephone className="mb-0 me-2"/>{item.phone}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -102,8 +121,8 @@ export default function List() {
                                                 <div className="catdWraps">
                                                     <div className="flex-start">
                                                         <Link href="#" className="d-flex align-items-center justify-content-start gap-2">
-                                                            <span className={item.tagIconStyle}><Icon className=""></Icon></span>
-                                                            <span className="catTitle">{item.tag}</span>
+                                                            {/* <span className={item.tagIconStyle}><Icon className=""></Icon></span> */}
+                                                            <span className="catTitle">{item.category_name}</span>
                                                         </Link>
                                                     </div>
                                                 </div>

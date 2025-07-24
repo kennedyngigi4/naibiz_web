@@ -22,13 +22,28 @@ import APIServices from '../../../../lib/services/api_services'
 export default function ListLayoutTwo() {
 
     const [ listings, setListings ] = useState<ListingModel[]>([]);
-    
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [filters, setFilters] = useState<{ category?: string; rating?: number }>({});
+
+
+    const fetchData = async (page = 1, newFilters = filters) => {
+        const queryParams = new URLSearchParams();
+        queryParams.append("page", page.toString());
+
+        if (newFilters.category) queryParams.append("category", newFilters.category);
+        if (newFilters.rating) queryParams.append("rating", newFilters.rating.toString());
+
+        const res = await APIServices.get(`businesses/all/?${queryParams.toString()}`);
+        console.log(res);
+        setListings(res.results);
+        setTotalPages(Math.ceil(res.count / 20));
+        setCurrentPage(page);
+        setFilters(newFilters);
+    }
+
     useEffect(() => {
-        const fetchData = async() => {
-            const res = await APIServices.get("businesses/all/");
-            console.log(res);
-            setListings(res);
-        }
+        
         fetchData();
     }, []);
 
@@ -36,7 +51,7 @@ export default function ListLayoutTwo() {
         <>
             <NavbarDark/>
             <div className="bg-white py-3 sticky-lg-top z-3">
-                <FilterOne list={true} />
+                <FilterOne list={true} onFilterChange={(newFilters) => fetchData(1, newFilters)} />
             </div>
 
             <section className="bg-light">
@@ -49,7 +64,7 @@ export default function ListLayoutTwo() {
                             </div>
                         </div>
 
-                        <div className="col-xl- 5 col-lg-5 col-md-5 col-sm-6 col-6">
+                        {/* <div className="col-xl- 5 col-lg-5 col-md-5 col-sm-6 col-6">
                             <div className="text-end">
                                 <div className="dropdown d-inline-flex p-0">
                                     <Link href="#" className="py-2 px-3 bg-white dropdown-toggle toogleDrops" id="shortfilter" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,11 +84,11 @@ export default function ListLayoutTwo() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="row align-items-center justify-content-center g-xl-4 g-3">
-                        {listings.slice(0, 8).map((item: ListingModel, index: number) => {
+                        {listings.map((item: ListingModel, index: number) => {
                             // let Icon = item.tagIcon
                             return (
                                 <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12" key={index}>
@@ -101,26 +116,7 @@ export default function ListLayoutTwo() {
                                                     <div className="listTitle d-block mb-4">
                                                         <div className="d-flex align-items-start justify-content-between gap-2">
                                                             <div className="flex-first">
-                                                                <div className="d-flex align-items-center justify-content-start gap-2 flex-wrap mb-3">
-                                                                    <div className="singleCaption">
-                                                                        <div className="bg-light border rounded-pill py-1 ps-1 pe-3">
-                                                                            <div className="d-inline-flex align-items-center justify-content-start gap-2">
-                                                                                <span className="square--25 circle bg-price text-light text-sm"><BsCoin className="lh-1 h-auto" /></span>
-                                                                                <span className="text-sm fw-medium">$30.50-$50.55</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    {/* {item.instantBooking &&
-                                                                        <div className="singleCaption">
-                                                                            <div className="bg-light border rounded-pill py-1 ps-1 pe-3">
-                                                                                <div className="d-inline-flex align-items-center justify-content-start gap-2">
-                                                                                    <span className="square--25 circle bg-booking text-light text-sm"><BsLightningChargeFill className="lh-1 h-auto" /></span>
-                                                                                    <span className="text-sm fw-medium">Instant Booking</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    } */}
-                                                                </div>
+                                                                
                                                                 <h5 className="listItemtitle mb-3"><Link href={`/${item.slug}`}>{item.name}<span className="verified"><BsPatchCheckFill className="m-0" /></span></Link></h5>
                                                                 <div className="d-flex align-items-center justify-content-start flex-wrap gap-3">
                                                                     <div className="flex-start"><div className="list-location text-muted"><span><FaLocationDot className="me-2" />{item.location}</span></div></div>
@@ -159,18 +155,29 @@ export default function ListLayoutTwo() {
 
                     <div className="row align-items-center justify-content-center mt-5">
                         <div className="col-xl-12 col-lg-12 col-md-12">
-                            <nav aria-label="Page navigation example">
+                            <nav aria-label="Page navigation">
                                 <ul className="pagination justify-content-center">
-                                    <li className="page-item">
-                                        <Link href="#" className="page-link"><FaArrowLeft className="" /></Link>
+                                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                        <button className="page-link" onClick={() => fetchData(currentPage - 1)}>
+                                            <FaArrowLeft />
+                                        </button>
                                     </li>
-                                    <li className="page-item"><Link href="#" className="page-link">1</Link></li>
-                                    <li className="page-item active"><Link href="#" className="page-link">2</Link></li>
-                                    <li className="page-item"><Link href="#" className="page-link">3</Link></li>
-                                    <li className="page-item"><Link href="#" className="page-link">4</Link></li>
-                                    <li className="page-item"><Link href="#" className="page-link">5</Link></li>
-                                    <li className="page-item">
-                                        <Link href="#" className="page-link"><FaArrowRight className="" /></Link>
+
+                                    {Array.from({ length: totalPages }, (_, index) => {
+                                        const pageNum = index + 1;
+                                        return (
+                                            <li key={pageNum} className={`page-item ${currentPage === pageNum ? 'active' : ''}`}>
+                                                <button className="page-link" onClick={() => fetchData(pageNum)}>
+                                                    {pageNum}
+                                                </button>
+                                            </li>
+                                        );
+                                    })}
+
+                                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                        <button className="page-link" onClick={() => fetchData(currentPage + 1)}>
+                                            <FaArrowRight />
+                                        </button>
                                     </li>
                                 </ul>
                             </nav>

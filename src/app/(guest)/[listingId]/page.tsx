@@ -140,7 +140,9 @@ export default function Page() {
                     <div className="container">
                         <div className="row align-items-start gx-xl-5 g-4">
                             <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                <Descriptions business={businessData} />
+                                {businessData && (
+                                    <Descriptions business={businessData} />
+                                )}
 
                                 {/* <Pricings /> */}
                                 {businessData?.products && (
@@ -162,14 +164,21 @@ export default function Page() {
 
                                 <Statistics />
 
-                                <Reviews business={businessData} />
+                                {businessData && (
+                                    <Reviews business={businessData} />
+                                )}
 
-                                <List />
+                                {businessData && (
+                                    <List business={businessData} />
+                                )}
+                                
 
                             </div>
 
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                <SingleSidebarOne business={businessData} />
+                                {businessData && (
+                                    <SingleSidebarOne business={businessData} />
+                                )}
                             </div>
 
                         </div>

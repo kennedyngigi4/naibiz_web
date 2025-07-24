@@ -1,12 +1,30 @@
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { BsFunnel, BsList, BsStarFill, BsUiRadiosGrid } from 'react-icons/bs'
 import RangeSlider from "./range-slider";
+import APIServices from "../../../lib/services/api_services";
 
 
-export default function FilterOne({list}:{list:boolean}) {
-  
+interface FilterOneProps {
+    list: boolean;
+    onFilterChange: (filters: { category?: string; rating?: number }) => void;
+}
+
+export default function FilterOne({ list, onFilterChange }: FilterOneProps) {
+    
+    const [categories, setCategories] = useState([]);
+    const[selectedCategory, setSelectedCategory] = useState<string | undefined>();
+    const [selectedRating, setSelectedRating] = useState<number | undefined>();
+
+    useEffect(() => {
+        const fetchData = async() => {
+            const res = await APIServices.get("businesses/categories/");
+            setCategories(res);
+        }
+        fetchData();
+    },[]);
+
   return (
     <>
         <div className="container">
@@ -27,63 +45,23 @@ export default function FilterOne({list}:{list:boolean}) {
                                     <div className="card rounded-3">
                                         <div className="card-body p-4">
                                             <div className="row align-items-start gy-2">
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="eatdrink1"/>
-                                                        <label className="form-check-label" htmlFor="eatdrink1">Eat & Drink</label>
+                                                {categories.map((category: any) => (
+                                                    <div key={category.id} className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                                        <div className="form-check form-check-inline">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="radio"
+                                                                name="category"
+                                                                id={`cat-${category.id}`}
+                                                                onChange={() => {
+                                                                    setSelectedCategory(category.id); 
+                                                                    onFilterChange({ category: category.id, rating: selectedRating });
+                                                                }}
+                                                            />
+                                                            <label className="form-check-label" htmlFor="eatdrink1">{category.name}</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="apartments1"/>
-                                                        <label className="form-check-label" htmlFor="apartments1">Apartments</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="classifieds1"/>
-                                                        <label className="form-check-label" htmlFor="classifieds1">Classified</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="services1"/>
-                                                        <label className="form-check-label" htmlFor="services1">Services</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="gymfitness1"/>
-                                                        <label className="form-check-label" htmlFor="gymfitness1">Gym & Fitness</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="nightlife1"/>
-                                                        <label className="form-check-label" htmlFor="nightlife1">Night Life</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="coachings1"/>
-                                                        <label className="form-check-label" htmlFor="coachings1">Coaching</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="shoppings1"/>
-                                                        <label className="form-check-label" htmlFor="shoppings1">Shopping</label>
-                                                    </div>
-                                                </div>
-                                            
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
@@ -105,22 +83,58 @@ export default function FilterOne({list}:{list:boolean}) {
                                                 </div>
                                                 
                                                 <div className="filterFlex">
-                                                    <input type="radio" className="btn-check" name="ratingsfilters" id="threeplus"/>
-                                                    <label className="btn" htmlFor="threeplus"><BsStarFill className="me-2"/>3.0+</label>
+                                                    <input
+                                                          type="radio"
+                                                          className="btn-check"
+                                                          name="ratingsfilters"
+                                                          id="2"
+                                                          onChange={() => {
+                                                              setSelectedRating(2);
+                                                              onFilterChange({ category: selectedCategory, rating: 2 });
+                                                          }}
+                                                    />
+                                                    <label className="btn" htmlFor="threeplus"><BsStarFill className="me-2"/>2.0+</label>
                                                 </div>
                                                 
                                                 <div className="filterFlex">
-                                                    <input type="radio" className="btn-check" name="ratingsfilters" id="fourplus"/>
-                                                    <label className="btn" htmlFor="fourplus"><BsStarFill className="me-2"/>4.0+</label>
+                                                    <input
+                                                          type="radio"
+                                                          className="btn-check"
+                                                          name="ratingsfilters"
+                                                          id="3"
+                                                          onChange={() => {
+                                                              setSelectedRating(3);
+                                                              onFilterChange({ category: selectedCategory, rating: 3 });
+                                                          }}
+                                                    />
+                                                    <label className="btn" htmlFor="fourplus"><BsStarFill className="me-2"/>3.0+</label>
                                                 </div>
                                                 
                                                 <div className="filterFlex">
-                                                    <input type="radio" className="btn-check" name="ratingsfilters" id="fourhalf"/>
-                                                    <label className="btn" htmlFor="fourhalf"><BsStarFill className="me-2"/>4.5+</label>	
+                                                    <input
+                                                        type="radio"
+                                                        className="btn-check"
+                                                        name="ratingsfilters"
+                                                        id="4"
+                                                        onChange={() => {
+                                                            setSelectedRating(4);
+                                                            onFilterChange({ category: selectedCategory, rating: 4 });
+                                                        }}
+                                                    />
+                                                    <label className="btn" htmlFor="fourhalf"><BsStarFill className="me-2"/>4.0+</label>	
                                                 </div>
                                                 
                                                 <div className="filterFlex">
-                                                    <input type="radio" className="btn-check" name="ratingsfilters" id="fiveplus"/>
+                                                    <input
+                                                          type="radio"
+                                                          className="btn-check"
+                                                          name="ratingsfilters"
+                                                          id="5"
+                                                          onChange={() => {
+                                                              setSelectedRating(5);
+                                                              onFilterChange({ category: selectedCategory, rating: 5 });
+                                                          }}
+                                                    />
                                                     <label className="btn" htmlFor="fiveplus"><BsStarFill className="me-2"/>5.0</label>	
                                                 </div>
                                                 
@@ -130,19 +144,7 @@ export default function FilterOne({list}:{list:boolean}) {
                                 </div>
                             </div>
                             
-                            <div className="dropdown d-inline-flex p-0 me-1">
-                                <a href="#" className="py-2 px-3 dropdown-toggle toogleDrops" id="pricefilter" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                    Price Filter
-                                </a>
-                                <div className="dropdown-menu pt-2 border-0 shadow-sm">
-                                    <div className="card rounded-3">
-                                        <div className="card-body">
-                                            <p className="fw-medium">Price Range in $ USD</p>
-                                            <RangeSlider/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             
                             <div className="dropdown d-inline-flex p-0 me-1">
                                 <a href="#" className="py-2 px-3 dropdown-toggle toogleDrops" id="distancefilter" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
@@ -160,75 +162,7 @@ export default function FilterOne({list}:{list:boolean}) {
                                 </div>
                             </div>
                             
-                            <div className="dropdown d-inline-flex p-0 me-1">
-                                <a href="#" className="py-2 px-3 dropdown-toggle toogleDrops" id="morefilter" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                    More Filter
-                                </a>
-                                <div className="dropdown-menu pt-2 border-0 shadow-sm">
-                                    <div className="card rounded-3">
-                                        <div className="card-body p-4">
-                                            <div className="row align-items-start gy-2">
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="goods1"/>
-                                                        <label className="form-check-label" htmlFor="goods1">Good for Kids</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="dogs1"/>
-                                                        <label className="form-check-label" htmlFor="dogs1">Dogs Allowed</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="seatings1"/>
-                                                        <label className="form-check-label" htmlFor="seatings1">Outdoor Seating</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="alcohal1"/>
-                                                        <label className="form-check-label" htmlFor="alcohal1">Alcohol</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="breakfast1"/>
-                                                        <label className="form-check-label" htmlFor="breakfast1">Breakfast</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="books1"/>
-                                                        <label className="form-check-label" htmlFor="books1">Instant Book</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="smokings1"/>
-                                                        <label className="form-check-label" htmlFor="smokings1">Smoking Allowed</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" id="wifi1"/>
-                                                        <label className="form-check-label" htmlFor="wifi1">Free WiFi</label>
-                                                    </div>
-                                                </div>
-                                            </div>	
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         
                     </div>
@@ -236,14 +170,7 @@ export default function FilterOne({list}:{list:boolean}) {
                 </div>
                 
                 <div className="col">
-                    <ul className="nav nav-pills nav-fill gap-2 small d-inline-flex lightprimary border border-2 rounded-pill p-1 float-end">
-                        <li className="nav-item" role="presentation">
-                            <Link href="/list-layout-02" className={`nav-link rounded-pill d-flex align-items-center ${list ? 'active' : ''}`} id="buy1"><BsList className="me-2"/>List</Link>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                            <Link href="/grid-layout-02" className={`nav-link rounded-pill d-flex align-items-center ${!list ? 'active' : ''}`} id="rent1"><BsUiRadiosGrid className="me-2"/>Grid</Link>
-                        </li>
-                    </ul>
+                    
                 </div>
             </div>
         </div>
@@ -342,7 +269,7 @@ export default function FilterOne({list}:{list:boolean}) {
                             </div>
                         </div>
                         
-                        <div className="filter-search-box mb-4">
+                        {/* <div className="filter-search-box mb-4">
                             <div className="filtersearch-title"><h6 className="mb-2 lh-base text-sm text-uppercase fw-medium">Price Range in USD</h6></div>
                             <div className="row align-items-center justify-content-between">
                                 <div className="col-12">
@@ -351,7 +278,7 @@ export default function FilterOne({list}:{list:boolean}) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         
                         <div className="filter-search-box mb-4">
                             <div className="filtersearch-title"><h6 className="mb-2 lh-base text-sm text-uppercase fw-medium">Distance Filter in Km</h6></div>

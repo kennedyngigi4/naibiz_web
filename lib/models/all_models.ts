@@ -82,6 +82,7 @@ export type ListingModel = {
     products: ProductModel,
     gallery: ImageModel,
     reviews: ReviewModel,
+    section?: string;
 }
 
 
