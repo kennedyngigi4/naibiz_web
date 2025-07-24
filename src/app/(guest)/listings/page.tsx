@@ -17,10 +17,12 @@ import { IconType } from 'react-icons'
 import NavbarDark from '@/app/components/navbar/navbar-dark'
 import { ListingModel } from '../../../../lib/models/all_models'
 import APIServices from '../../../../lib/services/api_services'
+import { useSearchParams } from 'next/navigation';
 
 
 export default function ListLayoutTwo() {
-
+    const searchParams = useSearchParams();
+    const categoryFromURL = searchParams.get('category');
     const [ listings, setListings ] = useState<ListingModel[]>([]);
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -43,9 +45,17 @@ export default function ListLayoutTwo() {
     }
 
     useEffect(() => {
-        
-        fetchData();
+        const categoryFromURL = searchParams.get('category');
+        const ratingFromURL = searchParams.get('rating');
+
+        const initialFilters: typeof filters = {};
+        if (categoryFromURL) initialFilters.category = categoryFromURL;
+        if (ratingFromURL) initialFilters.rating = parseFloat(ratingFromURL);
+
+        fetchData(1, initialFilters);
     }, []);
+
+    
 
     return (
         <>
@@ -64,27 +74,7 @@ export default function ListLayoutTwo() {
                             </div>
                         </div>
 
-                        {/* <div className="col-xl- 5 col-lg-5 col-md-5 col-sm-6 col-6">
-                            <div className="text-end">
-                                <div className="dropdown d-inline-flex p-0">
-                                    <Link href="#" className="py-2 px-3 bg-white dropdown-toggle toogleDrops" id="shortfilter" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Short Listings
-                                    </Link>
-                                    <div className="dropdown-menu border shadow-sm">
-                                        <ul className="card rounded-0 p-0">
-                                            <li><Link className="dropdown-item" href="#">Default Order</Link></li>
-                                            <li><Link className="dropdown-item" href="#">Highest Rated</Link></li>
-                                            <li><Link className="active dropdown-item" href="#">Most Reviewed</Link></li>
-                                            <li><Link className="dropdown-item" href="#">Newest Listings</Link></li>
-                                            <li><Link className="dropdown-item" href="#">Oldest Listings</Link></li>
-                                            <li><Link className="dropdown-item" href="#">Featured Listings</Link></li>
-                                            <li><Link className="dropdown-item" href="#">Most Viewed</Link></li>
-                                            <li><Link className="dropdown-item" href="#">Short By A To Z</Link></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
+                        
                     </div>
 
                     <div className="row align-items-center justify-content-center g-xl-4 g-3">

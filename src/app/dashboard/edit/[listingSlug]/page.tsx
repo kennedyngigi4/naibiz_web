@@ -56,6 +56,57 @@ export default function AddListing() {
     fetchData();
     }, [session, params]);
 
+
+    useEffect(() => {
+        if (businessData) {
+            setListingData(prev => ({
+                ...prev,
+                ...businessData,
+                mall: businessData.mall?.id || "",
+                category: businessData.category?.id || "",
+                subcategory: businessData.subcategory?.id || "",
+                services: businessData.services || "",
+                location: businessData.location || "",
+                description: businessData.description || "",
+                email: businessData.email || "",
+                phone: businessData.phone || "",
+                website: businessData.website || "",
+                whatsapp: businessData.whatsapp || "",
+                facebook: businessData.facebook || "",
+                instagram: businessData.instagram || "",
+                tiktok: businessData.tiktok || "",
+                twitterx: businessData.twitterx || "",
+                youtube: businessData.youtube || "",
+                linkedin: businessData.linkedin || "",
+            }));
+
+            // Populate working hours if available
+            if (businessData.hours && Array.isArray(businessData.hours)) {
+                const hourObj = {};
+                businessData.hours.forEach(hour => {
+                    const key = Object.keys(DAY_CODES).find(k => DAY_CODES[k] === hour.day.toString());
+                    if (key) {
+                        hourObj[key] = {
+                            opening: hour.opening_time || "",
+                            closing: hour.closing_time || ""
+                        };
+                    }
+                });
+                setHours(hourObj);
+            }
+
+            setLocation(businessData.location || "");
+            setLatLng({
+                lat: businessData.latitude,
+                lng: businessData.longitude,
+            });
+
+            setLogoPreview(businessData.profile_image || null);
+            setBannerPreview(businessData.main_banner || null);
+        }
+    }, [businessData]);
+
+
     const onLoad = (autocomplete: google.maps.places.Autocomplete) => {
         setAutocompleteRef(autocomplete);
     };
@@ -271,8 +322,6 @@ export default function AddListing() {
         }
 
 
-        console.log(listingData);
-
         const formData = new FormData();
         Object.entries(listingData).forEach(([key, value]) => {
             formData.append(key, value);
@@ -280,17 +329,29 @@ export default function AddListing() {
         buildHoursList().forEach(hour => {
             formData.append("hours", JSON.stringify(hour));
         });
-        
+
 
 
         // Append files if selected
-        if (logoImage) formData.append("profile_image", logoImage);
-        if (bannerImage) formData.append("main_banner", bannerImage);
+        if (profile_image instanceof File) {
+            formData.append("profile_image", profile_image);
+        }
+
+        if (main_banner instanceof File) {
+            formData.append("main_banner", main_banner);
+        }
+
+
 
         setIsSubmitting(true);
 
         try{
-            const res = await MerchantAPIServices.post("businesses/merchant/add_listing/", session?.accessToken, formData);
+            const res = await MerchantAPIServices.patch(
+                `businesses/merchant/listing_update/${params.listingSlug}/`,
+                session?.accessToken,
+                formData
+            );
+
             if(res.success){
                 toast.success(res.message || "Upload successful!");
                 router.push("/dashboard/my-listings");
@@ -356,10 +417,9 @@ export default function AddListing() {
                                                             <div className="form-group form-border">
                                                               <label className="lableTitle">Mall<BsPatchQuestionFill className="lableTip" data-bs-toggle="tooltip" data-bs-title="Maximum 10 keywords related with business" /></label>
                                                                 <div className="selects">
-                                                                    <Select 
-                                                                        placeholder="Business Bay Square" 
-                                                                        options={mallOptions} 
-                                                                        className="categories form-control" 
+                                                                    <Select
+                                                                        options={mallOptions}
+                                                                        value={mallOptions.find(option => option.value === listingData.mall)}
                                                                         onChange={(selectedOption) => handleSelectChange('mall', selectedOption)}
                                                                     />
                                                                 </div>
@@ -619,7 +679,7 @@ export default function AddListing() {
                                                                       <Select className='openingtime chosen-select border' options={time} placeholder="Opening Time" onChange={(selectedOption) => handleWorkingHoursChange('wednesday', 'opening', selectedOption)} />
                                                             </div>
                                                             <div className="col-lg-5 col-md-5">
-                                                                      <Select className='closingtime chosen-select border' options={time} placeholder="Closing Time" onChange={(selectedOption) => handleWorkingHoursChange('wednesday', 'opening', selectedOption)} />
+                                                                      <Select className='closingtime chosen-select border' options={time} placeholder="Closing Time" onChange={(selectedOption) => handleWorkingHoursChange('wednesday', 'closing', selectedOption)} />
                                                             </div>
                                                         </div>
                                                     </div>

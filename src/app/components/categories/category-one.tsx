@@ -24,7 +24,7 @@ export default function CategoryOne() {
     useEffect(() => {
         const fetchData = async() => {
             const res = await APIServices.get("businesses/categories_business_count/");
-            console.log(res);
+            
             setCategoriesBusinessCount(res);
         }
         fetchData();
@@ -50,7 +50,7 @@ export default function CategoryOne() {
                     return(
                         <SwiperSlide className="singleCategory" key={index}>
                             <div className="category-small-wrapper light">
-                                <Link href="#" className="categoryBox">
+                                <Link href={`/listings/?category=${item?.id}`} className="categoryBox">
                                     <div className="categoryCapstions">
                                         <div className="catsIcons"><div className="icoBoxx">
                                             <div dangerouslySetInnerHTML={{ __html: item.icon }} />   

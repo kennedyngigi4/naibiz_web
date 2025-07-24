@@ -70,11 +70,26 @@ const MerchantAPIServices = {
     },
 
 
-    patch: async function (url: string, token: string, data: any): Promise<any> {
+    patch: async function (url: string, token: string, formData: any): Promise<any> {
         try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/${url}`, {
+                method: "PATCH",
+                headers: {
+                    "Authorization": `Token ${token}`
+                },
+                body: formData
+            });
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                return { "success": false, "message": "Something went wrong." }
+            }
+
+            return data;
 
         } catch (e) {
-
+            return { "success": false, "message": e }
         }
     },
 
