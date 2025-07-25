@@ -85,6 +85,7 @@ export type ListingModel = {
     gallery: ImageModel,
     reviews: ReviewModel,
     section?: string;
+    rating: string;
 }
 
 

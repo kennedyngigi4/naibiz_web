@@ -110,8 +110,8 @@ export default function PopularListingOne() {
                                             </div>
                                             <div className="listing-rates">
                                                 <div className="d-flex align-items-center justify-content-start gap-1">
-                                                    <span className={`ratingAvarage good`}>4.5</span>
-                                                    <span className="overallrates">78</span>
+                                                    <span className={`ratingAvarage good`}>{item.rating}</span>
+                                                    <span className="overallrates">{item?.reviews?.length}</span>
                                                 </div>
                                             </div>
                                         </div>

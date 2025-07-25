@@ -109,7 +109,7 @@ export default function Page() {
                                                                 <div className="d-flex align-items-center justify-content-start gap-1">
                                                                     <BsStarFill className="text-warning text-sm" /><BsStarFill className="text-warning text-sm" /><BsStarFill className="text-warning text-sm" /><BsStarFill className="text-warning text-sm" /><BsStarHalf className="text-warning text-sm" />
                                                                 </div>
-                                                                {/* <span className="text-md fw-medium text-light">{`(${data && data.review})`}</span> */}
+                                                                <span className="text-md fw-medium text-light">{`(${businessData && businessData?.reviews?.length})`}</span>
                                                             </div>
                                                         </div>
                                                     </div>
