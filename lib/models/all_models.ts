@@ -33,6 +33,8 @@ export type ProductModel = {
     price: string;
     main_image: string;
     description: string;
+    slug: string;
+    whatsapp: string;
 }
 
 

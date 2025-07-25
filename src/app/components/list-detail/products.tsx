@@ -54,7 +54,7 @@ export default function Products({ business }: ProductsProps) {
                                     {item.status === "New" && 
                                         <div className="position-absolute top-0 start-0 mt-3 ms-3"><span className="badge badge-xs bg-seegreen text-uppercase">New</span></div>
                                     } */}
-                                    <Link href="#">
+                                    <Link href={`/product/${product.slug}/`}>
                                         <figure>	
                                             <Image src={product?.main_image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid rounded-2" alt="Product Thumb"/>
                                         </figure>
