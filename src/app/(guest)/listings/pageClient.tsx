@@ -94,9 +94,9 @@ export default function ListLayoutTwo() {
                                                     )
                                                     }
 
-                                                    {/* {item.featured &&
-                                                        <div className="position-absolute end-0 bottom-0 me-3 mb-3"><span className="badge badge-xs featuredList rounded-pill d-flex align-items-center"><FaStar className="me-1" />Featured</span></div>
-                                                    } */}
+                                                    {item.section &&
+                                                        <div className="position-absolute end-0 bottom-0 me-3 mb-3 text-capitalize"><span className="badge badge-xs featuredList rounded-pill d-flex align-items-center"><FaStar className="me-1" />{item.section}</span></div>
+                                                    }
                                                     <Link href={`/${item.id}`} className="d-block"><Image src={item?.main_banner} width={0} height={0} sizes='100vw' style={{ width: '100%', height: '100%' }} className="img-fluid list-thumb object-fit" alt="Listing Img" /></Link>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@ export default function ListLayoutTwo() {
                                                                     <div className="flex-start"><div className="list-location text-muted"><span><FaLocationDot className="me-2" />{item.location}</span></div></div>
                                                                     <div className="flex-last">
                                                                         <div className=" d-flex align-items-center justify-content-start">
-                                                                            <FaStar className="fa-solid fa-star text-warning"></FaStar><span className="mx-1 text-dark fw-bold">4.3</span><span className="text-muted text-md">(42k Reviews)</span>
+                                                                            <FaStar className="fa-solid fa-star text-warning"></FaStar><span className="mx-1 text-dark fw-bold">{item?.rating}</span><span className="text-muted text-md">({item?.reviews?.length} Reviews)</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
