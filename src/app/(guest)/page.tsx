@@ -59,7 +59,9 @@ export default function Home() {
                     <div className="col-xl-12 col-lg-12 col-md-12 col-md-12 col-12">
                         <div className="popularSearches d-flex align-items-center justify-content-center column-gap-3 row-gap-1 flex-wrap">
                             {categories.slice(0,8).map((item: any, index: number) => (
-                                <div key={index} className="singleItem"><Link href="#" className="badge badge-transparent rounded-pill">{item.name}</Link></div>
+                                <div key={index} className="singleItem">
+                                    <Link href={`/listings/?category=${item?.id}`} className="badge badge-transparent rounded-pill">{item.name}</Link>
+                                </div>
                             ))}
                         </div>
                     </div>
