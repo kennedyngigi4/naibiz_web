@@ -25,7 +25,7 @@ const AuthLayout = ({ children } : Readonly<{ children: React.ReactNode}>) => {
     }
 
     return (
-        <section>{children}</section>
+        <div>{children}</div>
     )
 }
 
