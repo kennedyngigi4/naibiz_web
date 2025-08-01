@@ -12,7 +12,11 @@ interface MostViewBlog{
     date: string;
 }
 
-export default function BlogSidebar() {
+interface BlogSidebarProps {
+    blogs: any;
+}
+
+export default function BlogSidebar({ blogs }: BlogSidebarProps) {
   return (
     <>
         <div className="blogSidebar d-flex flex-column align-items-start gap-4">
@@ -35,13 +39,13 @@ export default function BlogSidebar() {
                 <div className="card-body">
                     <div className="similarPosts">
                         <ul>
-                            {mostViewBlog.map((item:MostViewBlog,index:number)=>{
+                            {blogs.map((item:any,index:number)=>{
                                 return(
                                     <li key={index}>
-                                        <div className="postThumb"><Link href="/blog-detail" className="postImg"><figure><Image src={item.image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'auto'}} className="img-fluid rounded" alt="Post Image"/></figure></Link></div>
+                                        <div className="postThumb"><Link href={`/blog-detail/${item?.slug}`} className="postImg"><figure><Image src={item?.image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'auto'}} className="img-fluid rounded" alt="Nairobi Businesses"/></figure></Link></div>
                                         <div className="postCaps">
-                                            <h6><Link href="/blog-detail" className="link">{item.title}</Link></h6>
-                                            <span>{item.date}</span>
+                                            <h6><Link href={`/blog-detail/${item?.slug}`} className="link">{item?.title}</Link></h6>
+                                            <span>{new Date(item?.created_at).toLocaleDateString("en-us", { year: "numeric", month: "short", day: "numeric"})}</span>
                                         </div>
                                     </li>
                                 )

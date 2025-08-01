@@ -1,4 +1,4 @@
-import { BsBackpack, BsBarChart, BsBasket2, BsCameraReels, BsCodeSlash, BsCoin, BsCreditCard2Back, BsCupHot, BsCupStraw, BsEnvelopeAt, BsFacebook, BsFileEarmarkTextFill, BsGraphUpArrow, BsHouseCheck, BsInstagram, BsLamp, BsLayers, BsLinkedin, BsLungs, BsPatchCheck, BsPatchQuestion, BsPeopleFill, BsPersonCheck, BsPinMap, BsPinMapFill, BsPinterest, BsShop, BsSuitHeart, BsTwitter, BsYelp } from "react-icons/bs";
+import { BsBackpack, BsBarChart, BsBasket2, BsCameraReels, BsCodeSlash, BsCoin, BsCreditCard2Back, BsCupHot, BsCupStraw, BsEnvelopeAt, BsFacebook, BsFileArrowUpFill, BsFileEarmarkTextFill, BsGraphUpArrow, BsHouseCheck, BsInstagram, BsLamp, BsLayers, BsLinkedin, BsLungs, BsPatchCheck, BsPatchQuestion, BsPeopleFill, BsPerson, BsPersonCheck, BsPinMap, BsPinMapFill, BsPinterest, BsShop, BsSuitHeart, BsTwitter, BsYelp } from "react-icons/bs";
 import { FaDumbbell, FaStar, FaStarHalfStroke } from "react-icons/fa6";
 
 export const categoryData = [
@@ -429,19 +429,19 @@ export const eventData = [
 
 export const workData = [
     {
-        icon:BsPinMap,
-        title:'Find Your Dream Place',
-        desc:'Cicero famously orated against his political opponent Lucius wow abutere Sergius Catilina. Occasionally the first Oration.'
+        icon:BsPerson,
+        title:'Create Your Free Account',
+        desc:'Sign up with your email or phone number to create a business or personal account. It only takes a few seconds to get started.'
     },
     {
-        icon:BsEnvelopeAt,
-        title:'Contact Listing Owners',
-        desc:'Cicero famously orated against his political opponent Lucius wow abutere Sergius Catilina. Occasionally the first Oration.'
+        icon:BsFileArrowUpFill,
+        title:'Add Your Business Details',
+        desc:'Fill in your business name, category, location, contact info, and a short description. You can also upload photos, logos, and social media links to boost visibility.'
     },
     {
         icon:BsPatchCheck,
-        title:'Make Your Reservation',
-        desc:'Cicero famously orated against his political opponent Lucius wow abutere Sergius Catilina. Occasionally the first Oration.'
+        title:'Get Discovered',
+        desc:'Once approved, your listing goes live on Nairobi Business. Potential customers can now find your business, leave reviews, and contact you directly.'
     },
 ]
 export const reviewData2 = [
@@ -944,28 +944,63 @@ export const articles = [
 export const faqData1 = [
     {
         id:'collapseOne',
-        title:'How to Meet Nairobi Business Directory Agents?',
-        desc:`In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready. Think of a news blog that's filled with content hourly on the day of going live. However, reviewers tend to be distracted by comprehensible content, say, a random text copied from a newspaper or the internet. The are likely to focus on the text, disregarding the layout and its elements.`
+        title:'What is a business listing platform?',
+        desc:`A business listing platform is an online directory where users can search for, discover, and review businesses across various industries and locations.`
     },
     {
         id:'collapseTwo',
-        title:'Can I see Property Visualy?',
-        desc:`In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready. Think of a news blog that's filled with content hourly on the day of going live. However, reviewers tend to be distracted by comprehensible content, say, a random text copied from a newspaper or the internet. The are likely to focus on the text, disregarding the layout and its elements.`
+        title:'Why should I list my business online?',
+        desc:`Listing your business online increases visibility, attracts new customers, builds trust through reviews, and improves your search engine rankings.`
     },
     {
         id:'collapseThree',
-        title:'Can We Sell it?',
-        desc:`In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready. Think of a news blog that's filled with content hourly on the day of going live. However, reviewers tend to be distracted by comprehensible content, say, a random text copied from a newspaper or the internet. The are likely to focus on the text, disregarding the layout and its elements.`
+        title:'How do I find a specific type of business on Nairobi Business?',
+        desc:`Use the search bar to type keywords (e.g., "salon in Kisumu") or browse by category, location, or rating to find what you need.`
     },
     {
         id:'collapseFour',
-        title:'Can We Customized it According me?',
-        desc:`In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready. Think of a news blog that's filled with content hourly on the day of going live. However, reviewers tend to be distracted by comprehensible content, say, a random text copied from a newspaper or the internet. The are likely to focus on the text, disregarding the layout and its elements.`
+        title: 'Can I trust the reviews and ratings?',
+        desc:`We encourage verified, genuine reviews and use moderation tools to detect and remove fake or malicious content.`
     },
     {
         id:'collapseFive',
-        title:'Can We Get Any Extra Services?',
-        desc:`In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready. Think of a news blog that's filled with content hourly on the day of going live. However, reviewers tend to be distracted by comprehensible content, say, a random text copied from a newspaper or the internet. The are likely to focus on the text, disregarding the layout and its elements.`
+        title:'How often is business information updated?',
+        desc:`Business owners can update their profiles at any time. We also conduct periodic checks to ensure the information stays current.`
+    },
+    {
+        id: 'collapseSix',
+        title: 'What kind of businesses can be listed?',
+        desc: `Almost any legal business in Kenya can be listed, including restaurants, hospitals, tech firms, freelancers, NGOs, service providers, and more.`
+    },
+    {
+        id: 'collapseSeven',
+        title: 'Do I need to create an account to use the platform?',
+        desc: `You can browse and search freely, but creating an account lets you leave reviews, bookmark businesses, and manage your own listings.`
+    },
+    {
+        id: 'collapseEight',
+        title: 'Can I list my home-based or online business?',
+        desc: `Yes! Nairobi Business supports listings for home-based, remote, and online businesses as long as they serve customers in Kenya.`
+    },
+    {
+        id: 'collapseNine',
+        title: 'Is there a cost involved in using Nairobi Business?',
+        desc: `Basic access and listings are free. We also offer paid options for businesses that want more visibility and advanced features.`
+    },
+    {
+        id: 'collapseTen',
+        title: 'How do I report incorrect or fraudulent business information?',
+        desc: `Click the “Report” button on the listing page or contact our support team with details. We take action quickly to maintain accuracy and trust.`
+    },
+    {
+        id: 'collapseEleven',
+        title: 'How can I improve my business ranking on Nairobi Business?',
+        desc: `Encourage satisfied customers to leave reviews, keep your listing up-to-date, and consider upgrading to a premium package for better placement.`
+    },
+    {
+        id: 'collapseTwelve',
+        title: 'Can I advertise on Nairobi Business?',
+        desc: `Yes, we offer several advertising options including featured listings, banner ads, and category sponsorships. Contact us for a custom quote.`
     },
 ]
 export const faqData2 = [

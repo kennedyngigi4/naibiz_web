@@ -150,8 +150,8 @@ export default function AboutUs() {
                                             </div>
                                         </div>
                                         <div className="processCaps">
-                                            <h4 className="fw-medium">Explore Best Place</h4>
-                                            <p className="m-0">Reviewers tend to be distracted by presented with the actual comprehensible content often happens that private corporate clients corder.</p>
+                                            <h4 className="fw-medium">{item.title}</h4>
+                                            <p className="m-0">{item.desc}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@ export default function AboutUs() {
             </div>
         </section>
 
-        <section>
+        {/* <section>
             <div className="container">
                 <div className="row align-items-center justify-content-center">
                     <div className="col-xl-7 col-lg-8 col-md-11 col-sm-12">
@@ -194,7 +194,7 @@ export default function AboutUs() {
                 </div>
                 <TeamOne/>
             </div>
-        </section>
+        </section> */}
 
         <FooterTop/>
         <Footer/>

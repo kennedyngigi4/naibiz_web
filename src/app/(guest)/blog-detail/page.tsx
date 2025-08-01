@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import NavbarDark from '@/app/components/navbar/navbar-dark'
@@ -13,6 +15,8 @@ import { BsReply } from 'react-icons/bs'
 import Image from 'next/image'
 
 export default function BlogDetail() {
+    
+
   return (
     <div className='bg-light'>
         <NavbarDark/>

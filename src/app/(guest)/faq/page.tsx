@@ -67,55 +67,6 @@ export default function Faq() {
                                         </div>
                                     </div>
                                 </div>
-
-                                <div className="faqsWraps w-100">
-                                    <div className="fasqHeads mb-3">
-                                        <h4>Payment & Refund</h4>
-                                    </div>
-                                    <div className="faqsCaps">
-                                        <div className="accordion accordion-flush" id="paymentFlushExample">
-                                            {faqData2.map((item: FaqData, index: number) => {
-                                                return (
-                                                    <div className="accordion-item" key={index}>
-                                                        <h2 className="accordion-header rounded-2">
-                                                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-${item.id}`} aria-expanded="false" aria-controls={`#flush-${item.id}`}>
-                                                                {item.title}
-                                                            </button>
-                                                        </h2>
-                                                        <div id={`flush-${item.id}`} className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                            <div className="accordion-body">{item.desc}</div>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="faqsWraps w-100">
-                                    <div className="fasqHeads mb-3">
-                                        <h4>Support & Help</h4>
-                                    </div>
-                                    <div className="faqsCaps">
-                                        <div className="accordion accordion-flush" id="supportFlushExample">
-                                            {faqData3.map((item: FaqData, index: number) => {
-                                                return (
-                                                    <div className="accordion-item" key={index}>
-                                                        <h2 className="accordion-header rounded-2">
-                                                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-${item.id}`} aria-expanded="false" aria-controls={`#flush-${item.id}`}>
-                                                                {item.title}
-                                                            </button>
-                                                        </h2>
-                                                        <div id={`flush-${item.id}`} className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                            <div className="accordion-body">{item.desc}</div>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>

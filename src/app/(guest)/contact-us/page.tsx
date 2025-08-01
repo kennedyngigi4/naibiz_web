@@ -13,7 +13,7 @@ export default function ContactUs() {
         <>
             <NavbarDark />
 
-            <section className="bg-cover position-relative" style={{ backgroundImage: `url('/images/bg/1.jpg')` }} data-overlay="6">
+            <section className="bg-cover position-relative" style={{ backgroundImage: `url('/images/bg/0.jpeg')` }} data-overlay="6">
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
                         <div className="col-xl-7 col-lg-9 col-md-12">
@@ -43,7 +43,7 @@ export default function ContactUs() {
                                 </div>
                                 <div className="crds-desc">
                                     <h5 className="text-light">Call Us</h5>
-                                    <p className="fs-6 text-md lh-2 text-light opacity-75 mb-0">+254 712 345678<br />+254 712 345678</p>
+                                    <p className="fs-6 text-md lh-2 text-light opacity-75 mb-0">+254 722 476646.<br />+254 722 476646.</p>
                                 </div>
                             </div>
                         </div>

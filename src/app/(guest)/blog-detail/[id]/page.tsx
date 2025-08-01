@@ -20,6 +20,7 @@ import { toast } from 'react-toastify'
 
 export default function BlogDetail() {
     const [blog, setBlog] = useState({});
+    const [blogs, setBlogs] = useState([]);
     let params = useParams()
     
     const [email, setEmail] = useState("");
@@ -32,9 +33,10 @@ export default function BlogDetail() {
     useEffect(() => {
         const fetchData = async () => {
             const blog = await APIServices.get(`blogs/blog/${params.id}/`);
+            const blogs = await APIServices.get('blogs/blogs/');
             const comments = await APIServices.get("blogs/comments/");
-            console.log(blog);
             setBlog(blog)
+            setBlogs(blogs);
             setComments(comments);
         }
         fetchData();
@@ -230,7 +232,7 @@ export default function BlogDetail() {
                     </div>
                     
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                        <BlogSidebar/>
+                        <BlogSidebar blogs={blogs} />
                     </div>
                     
                 </div>

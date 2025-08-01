@@ -1,4 +1,6 @@
-import React from 'react'
+"use client";
+
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -12,6 +14,7 @@ import NavbarDark from '@/app/components/navbar/navbar-dark'
 import FooterTop from '@/app/components/footer-top'
 import Footer from '@/app/components/footer/footer'
 import BackToTop from '@/app/components/back-to-top'
+import APIServices from '../../../../lib/services/api_services'
 
 interface BlogData{
     id: number;
@@ -23,6 +26,16 @@ interface BlogData{
 }
 
 export default function Blog() {
+
+    const [ blogs, setBlogs ] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchBlogs = async() => {
+            const res = await APIServices.get("blogs/blogs/");
+            setBlogs(res);
+        }
+        fetchBlogs();
+    }, []);
   return (
     <>
         <NavbarDark/>
@@ -49,7 +62,7 @@ export default function Blog() {
         <section className="bg-light">
             <div className="container">
                 <div className="row justify-content-center g-4">
-                    <div className="col-xl-12 col-lg-12 col-md-12">
+                    {/* <div className="col-xl-12 col-lg-12 col-md-12">
                         <div className="card rounded-4 border">
                             <div className="row align-items-center justify-content-start">
                                 <div className="col-xl-4 col-lg-4 col-md-4">
@@ -74,23 +87,25 @@ export default function Blog() {
                                 
                             </div>
                         </div>
-                    </div>
-                    {blogData.map((item:BlogData,index:number)=>{
+                    </div> */}
+
+
+                    {blogs.map((item:BlogData,index:number)=>{
                         return(
                             <div className="col-xl-4 col-lg-4 col-md-6" key={index}>
                                 <div className="card rounded-4 shadow-sm h-100">
-                                    <Link href={`/blog-detail/${item.id}`} className="d-block bg-gradient rounded-top">
+                                    <Link href={`/blog-detail/${item?.slug}`} className="d-block bg-gradient rounded-top">
                                         <Image className="card-img-top hover-fade-out" src={item.image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} alt="blog image"/>
                                     </Link>
                                     <div className="card-body">
-                                        <Link href={`/blog-detail/${item.id}`}><h4 className="fw-semibold fs-5 lh-base mb-3">{item.title}</h4></Link>
+                                        <Link href={`/blog-detail/${item?.slug}`}><h4 className="fw-semibold fs-5 lh-base mb-3">{item.title}</h4></Link>
                                         <p>{item.desc}</p>
                                         <div className="d-flex align-items-center justify-content-start mt-4">
-                                            <Link href={`/blog-detail/${item.id}`} className="badge badge-primary rounded-pill">Continue Reading</Link>
+                                            <Link href={`/blog-detail/${item?.slug}`} className="badge badge-primary rounded-pill">Continue Reading</Link>
                                         </div>
                                     </div>
                                     <div className="card-footer bg-white d-flex justify-content-between align-items-center py-3">
-                                        <div className="text-dark fw-medium text-md d-flex align-items-center"><BsCalendarCheck className="me-2"/>{item.date}</div>
+                                        <div className="text-dark fw-medium text-md d-flex align-items-center"><BsCalendarCheck className="me-2"/>{new Date(item?.created_at).toLocaleDateString("en-us", { year: "numeric", month: "short", day: "numeric"})}</div>
                                         <div className="text-muted fw-medium text-md d-flex align-items-center"><BsEyeFill className="me-2"/>12k Views</div>
                                     </div>
                                 </div>

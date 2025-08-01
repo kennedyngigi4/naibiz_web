@@ -60,7 +60,7 @@ export default function Footer() {
                             <ul className="footer-menu">
                                 {footerLink3.map((item,index)=>{
                                     return(
-                                        <li key={index}><Link href="#">{item}</Link></li>
+                                        <li key={index}><Link href="/terms-conditions">{item}</Link></li>
                                     )
                                 })}
                             </ul>
@@ -83,7 +83,7 @@ export default function Footer() {
                                 <div className="singleinfo">
                                     <div className="icons"><BsTelephoneOutbound className=""/></div>
                                     <div className="caps">
-                                        <h5 className="title">254 712 345678</h5>
+                                        <h5 className="title">+254 722 476646.</h5>
                                         <p className="subs">Mon - Sat 8am - 6PM</p>											
                                     </div>
                                 </div>
