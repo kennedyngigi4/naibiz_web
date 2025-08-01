@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -13,9 +13,17 @@ import { MdArrowForwardIos } from 'react-icons/md'
 import { FaQuoteLeft, FaQuoteRight, FaThumbsDown, FaThumbsUp } from 'react-icons/fa6'
 import { BsReply } from 'react-icons/bs'
 import Image from 'next/image'
+import APIServices from '../../../../lib/services/api_services';
 
 export default function BlogDetail() {
-    
+    const [blogs, setBlogs] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const blogs = await APIServices.get('blogs/blogs/');
+            setBlogs(blogs);
+        }
+        fetchData();
+    }, []);
 
   return (
     <div className='bg-light'>
@@ -242,7 +250,7 @@ export default function BlogDetail() {
                     </div>
                     
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                        <BlogSidebar/>
+                        <BlogSidebar blogs={blogs} />
                     </div>
                     
                 </div>
