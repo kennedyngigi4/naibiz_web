@@ -107,7 +107,7 @@ export default function BlogDetail() {
                                         <div><Link href="#" className="link">24 Comments</Link></div>
                                     </div>
                                     
-                                    <p>{blog && blog?.content}</p>
+                                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: blog?.content }} />
                                     
                                     
                                     
