@@ -7,6 +7,7 @@ import { FaEye, FaFacebook, FaGooglePlusG } from 'react-icons/fa6'
 import  { loginUser } from '../../../../lib/services/auth_services';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { getSession } from 'next-auth/react';
 
 export default function Login() {
 
@@ -40,8 +41,16 @@ export default function Login() {
             const res = await loginUser(loginData.email, loginData.password);
             
             if(res.success){
+                const session = await getSession();
+                const role = session?.user?.role;
+                
                 toast.success(res.message);
-                router.push("/dashboard");
+                if(role == "merchant"){
+                    router.push("/dashboard");
+                } else if (role == "professional"){
+                    router.push("/professional");
+                }
+                
             } else {
                 toast.error(res.message);
             }

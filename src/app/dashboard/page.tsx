@@ -53,6 +53,8 @@ export default function Dashboarduser() {
             if (status === "loading") return <p>Loading...</p>;
             if (!session?.accessToken) {
                 throw new Error("You must be logged in.")
+            } else if(session?.user?.role == "professional") {
+                window.location.href = "/professional/";
             }
             const res = await MerchantAPIServices.get("businesses/merchant/all_listings/", session?.accessToken);
             const statistics = await MerchantAPIServices.get("businesses/merchant/statistics/", session?.accessToken);

@@ -7,7 +7,7 @@ export async function loginUser(email: string, password: string): Promise<any> {
     try {
         
         const res = await signIn("credentials", { email: email, password: password, redirect: false });
-        
+        console.log(res);
         if (res?.error) {
             return { "success": false, "message": "Email or Password is invalid!" }
         } else {

@@ -8,6 +8,7 @@ declare module "next-auth" {
             id?: string;
             fullname?: string;
             email?: string | null;
+            role? : string | null;
             image?: string | null;
         };
     }
@@ -17,6 +18,7 @@ declare module "next-auth" {
         refreshToken?: string;
         id?: string;
         fullname?: string;
+        role?:  string;
     }
 
     interface User {
@@ -24,5 +26,6 @@ declare module "next-auth" {
         refresh?: string;
         id?: string;
         fullname?: string;
+        role?: string;
     }
 }

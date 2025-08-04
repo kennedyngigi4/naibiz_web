@@ -77,6 +77,7 @@ export default function NavbarDark() {
                             <li className={`${['/'].includes(current)? 'active' : ''}`}><Link href="/">Home</Link></li>
 
                             <li className={`${['/listings'].includes(current) ? 'active' : ''}`}><Link href="/listings">Listings</Link></li>
+                            <li className={`${['/professionals'].includes(current) ? 'active' : ''}`}><Link href="/professionals">Professionals</Link></li>
                             <li className={`${['/about-us'].includes(current) ? 'active' : ''}`}><Link href="/about-us">About Us</Link></li>
                             <li className={`${['/blog'].includes(current) ? 'active' : ''}`}><Link href="/blog">Blogs</Link></li>
                             <li className={`${['/contact-us'].includes(current) ? 'active' : ''}`}><Link href="/contact-us">Contact Us</Link></li>

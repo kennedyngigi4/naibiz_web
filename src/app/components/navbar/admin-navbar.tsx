@@ -7,9 +7,11 @@ import { BsPersonCircle,BsBasket2,BsSearch, BsGeoAlt, BsSpeedometer, BsPersonLin
 import { FiX } from 'react-icons/fi';
 import { FaSortDown, FaXmark } from 'react-icons/fa6'
 import { BiSolidShoppingBagAlt } from 'react-icons/bi'
+import { useSession } from 'next-auth/react';
 
 
 export default function AdminNavbar() {
+    const {data:session} = useSession();
     const [scroll,setScroll] = useState(false);
     const [current , setCurrent] = useState('');
     const [windowWidth, setWindowWidth] = useState(0);
@@ -77,9 +79,8 @@ export default function AdminNavbar() {
                                 
                             </li>
 
-                            <li className={`${['/listings'].includes(current)? 'active' : ''}`}><Link href="/listings">Listings</Link>
-                                
-                            </li>
+                            <li className={`${['/listings'].includes(current)? 'active' : ''}`}><Link href="/listings">Listings</Link></li>
+                            <li className={`${['/professionals'].includes(current) ? 'active' : ''}`}><Link href="/professionals">Professionals</Link></li>
                             <li className={`${['/about-us'].includes(current) ? 'active' : ''}`}><Link href="/about-us">About Us</Link>
 
                             </li>
@@ -121,9 +122,12 @@ export default function AdminNavbar() {
                                     </div>
                                 </div>
                             </li>
-                            <li className="list-buttons">
-                                <Link href="/dashboard/add-listing"><BsGeoAlt className="fs-6 me-1"/>Add Listing</Link>
-                            </li>
+                            {session?.user?.role == "merchant" && (
+                                <li className="list-buttons">
+                                    <Link href="/dashboard/add-listing"><BsGeoAlt className="fs-6 me-1" />Add Listing</Link>
+                                </li>
+                            )}
+                            
                         </ul>
                     </div>
                 </nav>

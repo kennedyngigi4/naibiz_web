@@ -2,8 +2,6 @@ import { signIn } from "next-auth/react";
 
 const MerchantAPIServices = {
 
-    
-
     registration: async function (url: string, formData: any): Promise<any> {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/${url}`, {
@@ -81,6 +79,8 @@ const MerchantAPIServices = {
             });
 
             const data = await res.json()
+
+            console.log(data);
 
             if (!res.ok) {
                 return { "success": false, "message": "Something went wrong." }

@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { BsBookmarkStar, BsChatDots, BsJournalCheck, BsPatchPlus, BsPersonLinesFill, BsSpeedometer, BsUiRadiosGrid, BsWallet, BsYelp } from 'react-icons/bs'
-import { useSession } from 'next-auth/react';
+import { BsBookmarkStar, BsBoxArrowDownRight, BsBoxArrowRight, BsChatDots, BsJournalCheck, BsPatchPlus, BsPersonLinesFill, BsSpeedometer, BsUiRadiosGrid, BsWallet, BsYelp } from 'react-icons/bs'
+import { useSession, signOut } from 'next-auth/react';
 
 export default function AdminSidebar() {
     const [current , setCurrent] = useState('');
@@ -14,7 +14,13 @@ export default function AdminSidebar() {
 
     useEffect(()=>{
         setCurrent(location)
-    })
+    });
+
+    const logUserOut = async() => {
+        await signOut();
+        window.location.href = "/auth/login";
+    }
+
   return (
     <div className="col-xl-2 col-lg-3 col-md-12">
         <div className="user-dashboard-inner h-100 border-end border-2 py-5 p-3 d-lg-block d-none">
@@ -36,6 +42,7 @@ export default function AdminSidebar() {
                     <li><Link href="/dashboard/reviews" className={`${current === '/dashboard-reviews' ? 'active' : ''}`}><BsYelp className="me-2"/>Reviews</Link></li>
                     <li><Link href="/dashboard/wallet" className={`${current === '/dashboard-wallet' ? 'active' : ''}`}><BsWallet className="me-2"/>Wallet</Link></li>
                     <li><Link href="/dashboard/add-listing" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsPatchPlus className="me-2"/>Add Listing</Link></li>
+                    <li onClick={logUserOut}><Link href="" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsBoxArrowRight className="me-2"  /> Sign Out</Link></li>
                 </ul>
             </div>
         </div>
