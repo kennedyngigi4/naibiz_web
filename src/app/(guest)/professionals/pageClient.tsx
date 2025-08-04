@@ -58,7 +58,7 @@ export default function ListLayoutTwo() {
         <>
             <NavbarDark/>
             <div className="bg-white py-3 sticky-lg-top z-3">
-                <FilterOne list={true} onFilterChange={(newFilters) => fetchData(1, newFilters)} />
+                {/* <FilterOne list={true} onFilterChange={(newFilters) => fetchData(1, newFilters)} /> */}
             </div>
 
             <section className="bg-light">
