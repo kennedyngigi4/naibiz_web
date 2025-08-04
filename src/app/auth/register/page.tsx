@@ -114,7 +114,7 @@ export default function Register() {
                                                                       ? 'bg-primary text-white border-primary'
                                                                       : 'bg-white text-primary'
                                                                   }`}
-                                                              onClick={() => handleAccountSelect('business')}
+                                                              onClick={() => handleAccountSelect('merchant')}
                                                           >
                                                               <svg
                                                                   xmlns="http://www.w3.org/2000/svg"
