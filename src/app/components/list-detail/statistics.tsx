@@ -21,7 +21,7 @@ export default function Statistics() {
             curve: 'straight'
           },
           title: {
-            text: 'Product Trends by Month',
+            text: 'Bookings Trends per Month',
             align: 'left'
           },
           grid: {

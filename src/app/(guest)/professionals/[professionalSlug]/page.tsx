@@ -29,6 +29,9 @@ import NavbarDark from '@/app/components/navbar/navbar-dark';
 import { ListingModel } from '../../../../../lib/models/all_models';
 import APIServices from '../../../../../lib/services/api_services';
 import { toast } from 'react-toastify';
+import Educations from '@/app/components/list-detail/educations';
+import WorkExperience from '@/app/components/list-detail/work-experience';
+import ProfessionalSchedule from '@/app/components/list-detail/professional-schedule';
 
 
 
@@ -141,10 +144,17 @@ export default function Page() {
                                     <Descriptions professional={professionalData} />
                                 )}
 
-                                {/* <Pricings /> */}
-                                {/* {businessData?.products && (
-                                    <Products business={businessData} />
-                                )} */}
+                                {professionalData && (
+                                    <Educations professional={professionalData} />
+                                )}
+
+                                {professionalData && (
+                                    <WorkExperience professional={professionalData} />
+                                )}
+
+                                {professionalData && (
+                                    <ProfessionalSchedule professional={professionalData} />
+                                )}
                                 
 
                                 {/* <Features /> */}

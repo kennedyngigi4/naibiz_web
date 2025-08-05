@@ -34,7 +34,7 @@ export default function ListLayoutTwo() {
         // if (newFilters.rating) queryParams.append("rating", newFilters.rating.toString());
 
         const res = await APIServices.get(`professional/all/`);
-        
+        console.log(res);
         setProfessionals(res);
         setTotalPages(Math.ceil(res.count / 20));
         setCurrentPage(page);

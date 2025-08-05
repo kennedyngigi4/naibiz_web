@@ -12,7 +12,7 @@ export default function Descriptions({ professional }: DescriptionsProps) {
   return (
         <div className="listingSingleblock mb-4" id="descriptions">
             <div className="SingleblockHeader">
-                <Link data-bs-toggle="collapse" data-parent="#description" data-bs-target="#description" aria-controls="description" href="#" aria-expanded="false" className="collapsed"><h4 className="listingcollapseTitle">Description</h4></Link>
+                <Link data-bs-toggle="collapse" data-parent="#description" data-bs-target="#description" aria-controls="description" href="#" aria-expanded="false" className="collapsed"><h4 className="listingcollapseTitle">About me</h4></Link>
             </div>
             
             <div id="description" className="panel-collapse collapse show">
