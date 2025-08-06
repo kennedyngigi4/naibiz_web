@@ -32,6 +32,7 @@ import { toast } from 'react-toastify';
 import Educations from '@/app/components/list-detail/educations';
 import WorkExperience from '@/app/components/list-detail/work-experience';
 import ProfessionalSchedule from '@/app/components/list-detail/professional-schedule';
+import ProfessionalSidebar from '@/app/components/professional-sidebar';
 
 
 
@@ -58,13 +59,13 @@ export default function Page() {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append("content", message);
+        formData.append("message", message);
         if(professionalData){
-            formData.append("business", professionalData?.id);
+            formData.append("professional", professionalData?.id);
         }
 
         try {
-            const res = await APIServices.post("messages/send_message/", formData);
+            const res = await APIServices.post("professional/send_message/", formData);
             if(res.success){
                 toast.success(res.message);
                 setMessage("");
@@ -156,17 +157,10 @@ export default function Page() {
                                     <ProfessionalSchedule professional={professionalData} />
                                 )}
                                 
-
-                                {/* <Features /> */}
-
-                                {/* {businessData?.gallery && (
-                                    <Galleries business={businessData} />
-                                )} */}
-
                                 
-                                {/* {(businessData?.latitude && businessData?.longitude)  && (
-                                    <Maps latitude={businessData?.latitude} longitude={businessData?.longitude} label={businessData?.location} />
-                                )} */}
+                                {(professionalData?.latitude && professionalData?.longitude)  && (
+                                    <Maps latitude={professionalData?.latitude} longitude={professionalData?.longitude} label={professionalData?.location} />
+                                )}
                                 
 
                                 <Statistics />
@@ -184,7 +178,7 @@ export default function Page() {
 
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                 {professionalData && (
-                                    <SingleSidebarOne business={professionalData} />
+                                    <ProfessionalSidebar professional={professionalData} />
                                 )}
                             </div>
 
@@ -206,17 +200,17 @@ export default function Page() {
                         </div>
                         <div className="modal-body p-md-5">
                             <form onSubmit={handleMessage}>
-                            <div className="messageForm">
-                                <div className="form-group form-border">
-                                    <textarea 
-                                        className="form-control" 
-                                        placeholder="Type your Message To Dan"
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                    ></textarea>
+                                <div className="messageForm">
+                                    <div className="form-group form-border">
+                                        <textarea 
+                                            className="form-control" 
+                                            placeholder="Type your Message To Dan"
+                                            value={message}
+                                            onChange={(e) => setMessage(e.target.value)}
+                                        ></textarea>
+                                    </div>
+                                    <button type="submit" className="btn btn-primary fw-medium px-md-5">Send message<FiArrowRight className="ms-2" /></button>
                                 </div>
-                                <button type="submit" className="btn btn-primary fw-medium px-md-5">Send message<FiArrowRight className="ms-2" /></button>
-                            </div>
                             </form>
                         </div>
                     </div>

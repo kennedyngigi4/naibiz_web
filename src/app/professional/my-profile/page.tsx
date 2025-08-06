@@ -4,12 +4,15 @@ import ProfessionalSidebar from '@/app/components/admin/professional-sidebar';
 import BackToTop from '@/app/components/back-to-top';
 import AdminNavbar from '@/app/components/navbar/admin-navbar';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MerchantAPIServices from '../../../../lib/services/merchant_api_services';
 import { BsPatchQuestionFill, BsTrash, BsTrash2 } from 'react-icons/bs';
 import { FaFile } from 'react-icons/fa6';
 import APIServices from '../../../../lib/services/api_services';
 import { toast } from 'react-toastify';
+import { Autocomplete, LoadScript } from '@react-google-maps/api';
+const GOOGLE_MAPS_API_KEY = `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+
 
 const MyProfile = () => {
     const { data:session, status } = useSession();
@@ -29,6 +32,11 @@ const MyProfile = () => {
     const [ bio, setBio] = useState("");
     const [ profileImage, setProfileImage ] = useState("");
     const [ bannerMain, setBannerMain ] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [autocompleteRef, setAutocompleteRef] = useState<google.maps.places.Autocomplete | null>(null);
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [latLng, setLatLng] = useState({ lat: null, lng: null });
 
     const [ logoImage, setLogoImage] = useState("");
     const [ logoPreview, setLogoPreview ] = useState("");
@@ -59,6 +67,35 @@ const MyProfile = () => {
     const [ timeTo, setTimeTo] = useState("");
     const [ scheduleList, setScheduleList ] = useState<any[]>([]);
 
+
+    const onLoad = (autocomplete: google.maps.places.Autocomplete) => {
+        setAutocompleteRef(autocomplete);
+    };
+
+    const onPlaceChanged = () => {
+        if (autocompleteRef !== null) {
+            const place = autocompleteRef.getPlace();
+            if (!place.geometry) return;
+
+            const name = place.name || "";
+            const address = place.formatted_address || place.name;
+            const lat = place.geometry.location.lat();
+            const lng = place.geometry.location.lng();
+
+            // Round lat/lng to 5 decimals
+            const roundedLat = lat ? Number(lat.toFixed(5)) : "";
+            const roundedLng = lng ? Number(lng.toFixed(5)) : "";
+
+            setLocation(`${name}, ${address}`);
+            setLatitude(roundedLat);
+            setLongitude(roundedLng);
+        }
+    };
+
+
+    const handleManualChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLocation(e.target.value);
+    };
 
     const logoChange = async(e: any) => {
         const file = e.target.files[0];
@@ -149,6 +186,8 @@ const MyProfile = () => {
         formData.append("email", email);
         formData.append("website", website);
         formData.append("location", location);
+        formData.append("latitude", latitude);
+        formData.append("longitude", longitude);
         formData.append("bio", bio);
         formData.append("consultation_fee", fee);
 
@@ -312,6 +351,7 @@ const MyProfile = () => {
 
     return (
         <>
+            <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={['places']}>
                 <AdminNavbar/>
         
                 <section className="p-0">
@@ -421,7 +461,30 @@ const MyProfile = () => {
                                                                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                                                     <div className="form-group form-border">
                                                                         <label className="lableTitle">Location<BsPatchQuestionFill className="lableTip" data-bs-toggle="tooltip" data-bs-title="location" /></label>
-                                                                        <input type="text" className="form-control rounded" name="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g Office, Westlands, Nairobi, Kenya" />
+                                                                        <Autocomplete
+                                                                            onLoad={onLoad}
+                                                                            onPlaceChanged={onPlaceChanged}
+                                                                            options={{
+                                                                                componentRestrictions: { country: "ke" },
+                                                                                types: ["establishment"],
+                                                                                fields: ["name", "formatted_address", "geometry", "place_id"],
+                                                                            }}
+                                                                        >
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                ref={inputRef}
+                                                                                placeholder="Enter business or building name"
+                                                                                value={location}
+                                                                                onChange={handleManualChange}
+                                                                            />
+                                                                        </Autocomplete>
+                                                                        <small className="form-text text-muted">
+                                                                            Coordinates: {latitude}, {longitude}
+                                                                        </small>
+
+
+                                                                        {/* <input type="text" className="form-control rounded" name="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g Office, Westlands, Nairobi, Kenya" /> */}
                                                                     </div>
                                                                 </div>
                                                                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -706,7 +769,8 @@ const MyProfile = () => {
                 </section>
         
                 <BackToTop/>
-            </>
+            </LoadScript>
+        </>
     )
 }
 

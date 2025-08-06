@@ -33,15 +33,10 @@ export default function ProfessionalSidebar() {
             </div>
             <div className="dashboard_Menu">
                 <ul>
-                    <li><Link href="/professional/" className={`${current === '/dashboard-user' ? 'active' : ''}`}><BsSpeedometer className="me-2"/>Dashboard Area</Link></li>
-                    <li><Link href="/professional/my-profile" className={`${current === '/dashboard-my-profile' ? 'active' : ''}`}><BsPersonLinesFill className="me-2"/>My Profile</Link></li>
-                    {/* <li><Link href="/dashboard/my-bookings" className={`${current === '/dashboard-my-bookings' ? 'active' : ''}`}><BsJournalCheck className="me-2"/>My Bookings</Link></li>
-                    <li><Link href="/dashboard/my-listings" className={`${current === '/dashboard-my-listings' ? 'active' : ''}`}><BsUiRadiosGrid className="me-2"/>My Listings</Link></li>
-                    <li><Link href="/dashboard/bookmarks" className={`${current === '/dashboard-bookmarks' ? 'active' : ''}`}><BsBookmarkStar className="me-2"/>Bookmarkes</Link></li>
-                    <li><Link href="/dashboard/messages" className={`${current === '/dashboard-messages' ? 'active' : ''}`}><BsChatDots className="me-2"/>Messages<span className="notti_coun style-1">3</span></Link></li> */}
-                    <li><Link href="/professional/wallet" className={`${current === '/dashboard-wallet' ? 'active' : ''}`}><BsWallet className="me-2"/>Bookings</Link></li>
-                    <li><Link href="/professional/reviews" className={`${current === '/dashboard-reviews' ? 'active' : ''}`}><BsYelp className="me-2" />Reviews</Link></li> 
-                    {/* <li><Link href="/dashboard/add-listing" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsPatchPlus className="me-2"/>Add Listing</Link></li> */}
+                    <li><Link href="/professional/" className={`${current === '/professional' ? 'active' : ''}`}><BsSpeedometer className="me-2"/>Dashboard Area</Link></li>
+                    <li><Link href="/professional/my-profile" className={`${current === '/professional/my-profile' ? 'active' : ''}`}><BsPersonLinesFill className="me-2"/>My Profile</Link></li>
+                    <li><Link href="/professional/bookings" className={`${current === '/professional/bookings' ? 'active' : ''}`}><BsWallet className="me-2"/>Bookings</Link></li>
+                    <li><Link href="/professional/messages" className={`${current === '/professional/messages' ? 'active' : ''}`}><BsYelp className="me-2" />Messages</Link></li> 
                     <li onClick={logUserOut}><Link href="" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsBoxArrowRight className="me-2"  /> Sign Out</Link></li>
                 </ul>
             </div>
