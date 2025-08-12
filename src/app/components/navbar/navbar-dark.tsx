@@ -7,12 +7,14 @@ import { FiX } from 'react-icons/fi';
 import { BiSolidShoppingBagAlt } from 'react-icons/bi'
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 export default function NavbarDark() {
     const [scroll,setScroll] = useState(false);
     const [current , setCurrent] = useState('');
     const [windowWidth, setWindowWidth] = useState(0);
     const [toggle, setIsToggle] = useState(false);
+    const { data:session} = useSession();
 
     const location = usePathname(); 
 
@@ -54,19 +56,7 @@ export default function NavbarDark() {
                     <div className="nav-header">
                         <Link className="nav-brand" href="/"><Image src='/logo.png' width={0} height={0} sizes='100vw' style={{width:'166px', height:'auto'}} className="logo" alt=""/></Link>
                         <div className="nav-toggle" onClick={()=>setIsToggle(!toggle)}></div>
-                        {/* <div className="mobile_nav">
-                            <ul>
-                                <li>
-                                    <Link href="#login" className="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#login"><BsPersonCircle className="me-1"/></Link>
-                                </li>
-                                <li>
-                                    <Link href="#cartSlider" className="cart-content" data-bs-toggle="offcanvas" role="button" aria-controls="cartSlider"><BsBasket2  className=""/><span className="head-cart-counter">3</span></Link>
-                                </li>
-                                <li>
-                                    <Link href="#searchSlider" className="d-flex align-items-center" data-bs-toggle="offcanvas" role="button" aria-controls="searchSlider"><BsSearch className="me-1"/></Link>
-                                </li>
-                            </ul>
-                        </div> */}
+                        
                     </div>
                     <div className={`nav-menus-wrapper  ${toggle ? 'nav-menus-wrapper-open' : ''}`} style={{transitionProperty:toggle ? 'none' : 'left'}}>
                         <div className='mobLogos'>
@@ -85,10 +75,15 @@ export default function NavbarDark() {
                             <li><Link href="/auth/register" className="mob-addlisting light" ><BsGeoAltFill className="me-1"/>Add Listing</Link></li>
                         </ul>
 
-                        <ul className="nav-menu nav-menu-social align-to-right">
+                        <ul className="nav-menu nav-menu-social align-to-right text-white">
                             
                             <li className="list-buttons">
-                                <Link href="/auth/register"><BsGeoAlt className="fs-6 me-1"/>Add Listing</Link>
+                                {session?.user?.name ? (
+                                    <Link href="/dashboard"><BsGeoAlt className="fs-6 me-1" />Hi {session?.user?.name}</Link>
+                                ) : (
+                                    <Link href = "/auth/register"><BsGeoAlt className = "fs-6 me-1"/>Add Listing</Link>
+                                )}
+                                
                             </li>
                         </ul>
                     </div>

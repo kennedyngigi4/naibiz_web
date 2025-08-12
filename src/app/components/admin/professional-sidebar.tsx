@@ -37,6 +37,7 @@ export default function ProfessionalSidebar() {
                     <li><Link href="/professional/my-profile" className={`${current === '/professional/my-profile' ? 'active' : ''}`}><BsPersonLinesFill className="me-2"/>My Profile</Link></li>
                     <li><Link href="/professional/bookings" className={`${current === '/professional/bookings' ? 'active' : ''}`}><BsWallet className="me-2"/>Bookings</Link></li>
                     <li><Link href="/professional/messages" className={`${current === '/professional/messages' ? 'active' : ''}`}><BsYelp className="me-2" />Messages</Link></li> 
+                    <li><Link href="/professional/affiliate" className={`${current === '/professional/affiliate' ? 'active' : ''}`}><BsYelp className="me-2" />Affiliate</Link></li> 
                     <li onClick={logUserOut}><Link href="" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsBoxArrowRight className="me-2"  /> Sign Out</Link></li>
                 </ul>
             </div>

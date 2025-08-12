@@ -111,8 +111,7 @@ export default function Login() {
                                                 <div className="modal-flex-item d-flex align-items-center justify-content-between mb-3">
                                                     <div className="modal-flex-first">
                                                         <div className="form-check form-check-inline">
-                                                            <input className="form-check-input" type="checkbox" id="savepassword" value="option1"/>
-                                                            <label className="form-check-label" htmlFor="savepassword">Save Password</label>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div className="modal-flex-last">
@@ -135,12 +134,7 @@ export default function Login() {
                                                             <span className="fw-medium text-md">Signin with Google</span>
                                                         </Link>
                                                     </div>
-                                                    <div className="flex-last flex-fill mob-100">
-                                                        <Link href="#" className="btn bg-white border  text-dark full-width">
-                                                            <FaFacebook className="color--facebook me-2"/>
-                                                            <span className="fw-medium text-md">Signin with Facebook</span>
-                                                        </Link>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </form>

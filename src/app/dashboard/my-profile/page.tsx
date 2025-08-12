@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -7,8 +8,64 @@ import AdminSidebar from '@/app/components/admin/admin-sidebar'
 import BackToTop from '@/app/components/back-to-top'
 
 import { FaHeart } from 'react-icons/fa6'
+import { useSession } from 'next-auth/react'
+import MerchantAPIServices from '../../../../lib/services/merchant_api_services'
+import { toast } from 'react-toastify';
 
 export default function MyProfile() {
+    const { data:session } = useSession();
+    const [ profileData, setProfileData ] = useState<any>({});
+    const [fullname, setFullname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+
+    useEffect(() => {
+        const fetchData = async() => {
+            if(!session?.accessToken){
+                throw new Error("You must be logged in.")
+            }
+
+            const res = await MerchantAPIServices.get(`account/profile/`, session?.accessToken);
+            console.log(res);
+            setProfileData(res);
+
+            
+            
+        }
+        fetchData();
+    }, [session]);
+
+
+    useEffect(() => {
+        if (profileData) {
+            setFullname(profileData?.fullname);
+            setEmail(profileData?.email);
+            setPhone(profileData?.phone);
+        }
+    }, [profileData]);
+
+
+
+    const handleUpdate = async() => {
+        const formData = new FormData();
+        formData.append("fullname", fullname);
+        formData.append("email", email);
+        formData.append("phone", phone);
+
+        if (!session?.accessToken) {
+            throw new Error("You must be logged in.")
+        }
+
+        const res = await MerchantAPIServices.patch('account/profile-update/', session?.accessToken, formData);
+        console.log(res);
+        if(res.success){
+            toast.success("Profile updated.");
+        } else {
+            toast.error("An error occurred.");
+        }
+    }
+
+
   return (
     <>
        <AdminNavbar/>
@@ -37,197 +94,44 @@ export default function MyProfile() {
                                                 </div>
                                             </div>
                                             
-                                            <div className="row align-items-start">
-                                            
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>First Name</label>
-                                                        <input type="text" className="form-control" placeholder="Daniel"/>
+                                            <form onSubmit={handleUpdate}>
+                                                <div className="row align-items-start">
+                                                    
+                                                    <div className="col-xl-12 col-lg-12 col-md-12">
+                                                        <div className="form-group form-border">
+                                                            <label>Full Name</label>
+                                                            <input type="text" name="fullname" value={fullname} onChange={(e) => setFullname(e.target.value)} className="form-control" placeholder="Daniel"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                
+                                                    
+                                                    <div className="col-xl-6 col-lg-6 col-md-6">
+                                                        <div className="form-group form-border">
+                                                            <label>Phone</label>
+                                                            <input type="tel" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder="254722..."/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className="col-xl-6 col-lg-6 col-md-6">
+                                                        <div className="form-group form-border">
+                                                            <label>Email</label>
+                                                            <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="danieldecuze@gmail.com"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div className="col-xl-12 col-lg-12 col-md-12">
+                                                        <div className="d-flex align-items-center justify-content-start flex-wrap gap-3 mt-3">
+                                                            <button className="btn btn-primary btn-sm fw-medium flex-fill" type="submit">Save Changes</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Last Name</label>
-                                                        <input type="text" className="form-control" placeholder="Decuze"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Phone</label>
-                                                        <input type="tel" className="form-control" placeholder="5684526582"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Email</label>
-                                                        <input type="email" className="form-control" placeholder="danieldecuze@gmail.com"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-12 col-lg-12 col-md-12">
-                                                    <div className="form-group form-border">
-                                                        <label>Member of</label>
-                                                        <input type="text" className="form-control" placeholder="Daniel"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-12 col-lg-12 col-md-12">
-                                                    <div className="form-group form-border">
-                                                        <label>About Me</label>
-                                                        <textarea className="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
+                                            </form>
                                             
                                         </div>
                                     </div>
-                                    
-                                    <div className="card rounded-3 shadow-sm mb-lg-5 mb-4">
-                                        <div className="card-body p-4">
-                                            
-                                            <div className="row align-items-start">
-                                                <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-                                                    <div className="cardTitle d-flex align-items-center justify-content-start mb-3">
-                                                        <h6 className="fw-semibold">Contact Information</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="row align-items-start mb-4">
-                                            
-                                                <div className="col-xl-12 col-lg-12 col-md-12">
-                                                    <div className="form-group form-border">
-                                                        <label>Address 1</label>
-                                                        <input type="text" className="form-control" placeholder="123 Moobek Marg, Sirathu"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>City</label>
-                                                        <input type="text" className="form-control" placeholder="Denver"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>State</label>
-                                                        <input type="tel" className="form-control" placeholder="New York"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Country</label>
-                                                        <input type="text" className="form-control" placeholder="United State"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Zip Code</label>
-                                                        <input type="text" className="form-control" placeholder="HQ4560R"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Latitude</label>
-                                                        <input type="text" className="form-control" placeholder="+568452568"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Longitude</label>
-                                                        <input type="text" className="form-control" placeholder="-45695824"/>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                            <div className="row align-items-start">
-                                                <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-                                                    <div className="cardTitle d-flex align-items-center justify-content-start mb-3">
-                                                        <h6 className="fw-semibold">Social Accounts</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="row align-items-start">
-                                            
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Facebook</label>
-                                                        <input type="text" className="form-control" placeholder=""/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Twitter</label>
-                                                        <input type="text" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>LinkedIn</label>
-                                                        <input type="tel" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Dribbble</label>
-                                                        <input type="text" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Pinterest</label>
-                                                        <input type="text" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Vimeo URL</label>
-                                                        <input type="text" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Youtube URL</label>
-                                                        <input type="text" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-6 col-lg-6 col-md-6">
-                                                    <div className="form-group form-border">
-                                                        <label>Website URL</label>
-                                                        <input type="text" className="form-control"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-xl-12 col-lg-12 col-md-12">
-                                                    <div className="d-flex align-items-center justify-content-start flex-wrap gap-3 mt-3">
-                                                        <button className="btn btn-primary fw-medium flex-fill" type="button">Update Profile</button>
-                                                        <button className="btn btn-light-primary fw-medium flex-fill" type="button">Reset Profile</button>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    
+
                                     <div className="card rounded-3 shadow-sm">
                                         <div className="card-body p-4">
                                             <div className="row align-items-start">
@@ -262,8 +166,8 @@ export default function MyProfile() {
                                                 
                                                 <div className="col-xl-12 col-lg-12 col-md-12">
                                                     <div className="d-flex align-items-center justify-content-start flex-wrap gap-3 mt-3">
-                                                        <button className="btn btn-primary fw-medium flex-fill" type="button">Update Password</button>
-                                                        <button className="btn btn-light-primary fw-medium flex-fill" type="button">Delete Account</button>
+                                                        <button className="btn btn-primary btn-sm fw-medium flex-fill" type="button">Update Password</button>
+                                                        <button className="btn btn-light-primary btn-sm fw-medium flex-fill" type="button">Delete Account</button>
                                                     </div>
                                                 </div>
                                                 

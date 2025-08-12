@@ -26,6 +26,7 @@ interface Personal{
 interface Social{
     icon: IconType;
     style: string;
+    link: string;
 }
 
 interface TimeTable{
@@ -48,23 +49,28 @@ export default function ProfessionalSidebar({ professional }: ProfessionalSideba
     const social = [
         {
             icon:BsFacebook,
-            style:'color--facebook'
+            style:'color--facebook',
+            link: professional?.facebook,
         },
         {
             icon:BsTwitterX,
-            style:'color--twitter'
+            style:'color--twitter',
+            link: professional?.twitter,
         },
         {
             icon:BsInstagram,
-            style:'color--instagram'
+            style:'color--instagram',
+            link: professional?.instagram,
         },
         {
             icon:BsYoutube,
-            style:'color--pinterest'
+            style:'color--pinterest',
+            link: professional?.youtube,
         },
         {
             icon:BsWhatsapp,
-            style:'color--whatsapp'
+            style:'color--whatsapp',
+            link: professional?.whatsapp,
         },
     ]
     
@@ -179,7 +185,7 @@ export default function ProfessionalSidebar({ professional }: ProfessionalSideba
                         {social.map((item:Social,index:number)=>{
                             let Icon = item.icon
                             return(
-                                <div className="flexSocial" key={index}><Link href="#" className="square--40 circle border"><Icon className={item.style}/></Link></div>
+                                <div className="flexSocial" key={index}><a href={item.link} target="_blank" rel="noopener noreferrer" className="square--40 circle border"><Icon className={item.style}/></a></div>
                             )
                         })}
                     </div>

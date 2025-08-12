@@ -22,7 +22,7 @@ interface ReviewData{
 
 export default function ClientOne() {
 
-    const [ reviews, setReviews ] = useState([]);
+    const [ reviews, setReviews ] = useState<any[]>([]);
 
     useEffect(()=>{
         const fetchData = async() => {
@@ -49,7 +49,7 @@ export default function ClientOne() {
                             1440: { slidesPerView: 4 },
                           }}
                         >
-                        {reviews.map((item:any,index:number)=>{
+                        {reviews?.map((item:any,index:number)=>{
                         return(
                             <SwiperSlide className="singleItem" key={index}>
                                 <div className="reviews-wrappers">

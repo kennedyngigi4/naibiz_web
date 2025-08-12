@@ -40,7 +40,7 @@ export default function AdminSidebar() {
                     <li><Link href="/dashboard/bookmarks" className={`${current === '/dashboard-bookmarks' ? 'active' : ''}`}><BsBookmarkStar className="me-2"/>Bookmarkes</Link></li>
                     <li><Link href="/dashboard/messages" className={`${current === '/dashboard-messages' ? 'active' : ''}`}><BsChatDots className="me-2"/>Messages<span className="notti_coun style-1">3</span></Link></li>
                     <li><Link href="/dashboard/reviews" className={`${current === '/dashboard-reviews' ? 'active' : ''}`}><BsYelp className="me-2"/>Reviews</Link></li>
-                    <li><Link href="/dashboard/wallet" className={`${current === '/dashboard-wallet' ? 'active' : ''}`}><BsWallet className="me-2"/>Wallet</Link></li>
+                    <li><Link href="/dashboard/affiliate" className={`${current === '/dashboard-affiliate' ? 'active' : ''}`}><BsWallet className="me-2"/>Affiliates</Link></li>
                     <li><Link href="/dashboard/add-listing" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsPatchPlus className="me-2"/>Add Listing</Link></li>
                     <li onClick={logUserOut}><Link href="" className={`${current === '/dashboard-add-listing' ? 'active' : ''}`}><BsBoxArrowRight className="me-2"  /> Sign Out</Link></li>
                 </ul>

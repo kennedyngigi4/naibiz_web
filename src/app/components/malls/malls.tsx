@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 export default function Malls() {
 
-    const [malls, setMalls] = useState([]);
+    const [malls, setMalls] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async() => {
@@ -41,7 +41,7 @@ export default function Malls() {
                         1024: { slidesPerView: 3 },
                       }}
                     >
-                {malls.map((item: MallModel,index:number)=>{
+                {malls?.map((item: MallModel,index:number)=>{
                     // let Icon = item.icon
                     return(
                         <SwiperSlide className="singleItem" key={item.id}>

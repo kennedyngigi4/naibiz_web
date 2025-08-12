@@ -20,7 +20,7 @@ interface CategoryData{
 
 export default function CategoryOne() {
 
-    const [categoriesBusinessCount, setCategoriesBusinessCount] = useState([]);
+    const [categoriesBusinessCount, setCategoriesBusinessCount] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async() => {
@@ -29,7 +29,10 @@ export default function CategoryOne() {
             setCategoriesBusinessCount(res);
         }
         fetchData();
+        
     }, []);
+
+
 
   return (
     <div className="row align-items-center justify-content-center">
@@ -46,7 +49,7 @@ export default function CategoryOne() {
                         1024: { slidesPerView: 5 },
                       }}
                     >
-                {categoriesBusinessCount.map((item:CategoryData,index:number)=>{
+                {categoriesBusinessCount?.map((item:CategoryData,index:number)=>{
                     // let Icon = item.icon
                     return(
                         <SwiperSlide className="singleCategory" key={index}>

@@ -14,7 +14,7 @@ export default function FormOne() {
     useEffect(()=>{
         const fetchData = async() => {
             const res = await APIServices.get("businesses/categories/");
-            const formatted = res.map((cat: any) => ({
+            const formatted = res?.map((cat: any) => ({
                 value: cat.id,
                 label: cat.name
             }));

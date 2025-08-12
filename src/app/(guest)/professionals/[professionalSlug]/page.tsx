@@ -33,6 +33,7 @@ import Educations from '@/app/components/list-detail/educations';
 import WorkExperience from '@/app/components/list-detail/work-experience';
 import ProfessionalSchedule from '@/app/components/list-detail/professional-schedule';
 import ProfessionalSidebar from '@/app/components/professional-sidebar';
+import ProfessionalBio from '@/app/components/list-detail/professional-bio';
 
 
 
@@ -142,7 +143,7 @@ export default function Page() {
                         <div className="row align-items-start gx-xl-5 g-4">
                             <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                                 {professionalData && (
-                                    <Descriptions professional={professionalData} />
+                                    <ProfessionalBio professional={professionalData} />
                                 )}
 
                                 {professionalData && (

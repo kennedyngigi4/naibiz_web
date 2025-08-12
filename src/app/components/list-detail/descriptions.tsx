@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { ListingModel } from '../../../../lib/models/all_models';
 
 interface DescriptionsProps {
-    professional: any;
+    business: any;
 }
 
-export default function Descriptions({ professional }: DescriptionsProps) {
+export default function Descriptions({ business }: DescriptionsProps) {
   return (
         <div className="listingSingleblock mb-4" id="descriptions">
             <div className="SingleblockHeader">
@@ -17,7 +17,7 @@ export default function Descriptions({ professional }: DescriptionsProps) {
             
             <div id="description" className="panel-collapse collapse show">
                 <div className="card-body p-4 pt-2">
-                  <p>{professional?.bio}</p>
+                <p>{business?.description}</p>
                 </div>
             </div>
         </div>
