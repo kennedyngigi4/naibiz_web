@@ -15,7 +15,7 @@ import BackToTop from "../components/back-to-top";
 import Malls from "../components/malls/malls";
 import FeaturedListingOne from "../components/featured-listing-one";
 import EnvironsListings from "../components/environs-listings";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import APIServices from "../../../lib/services/api_services";
 
 export default function Home() {
@@ -50,7 +50,9 @@ export default function Home() {
                     </div>
                 </div>
                 
-                <FormOne/>
+                <Suspense fallback={<div>Loading search...</div>}>
+                    <FormOne/>
+                </Suspense>
                 
                 <div className="row align-items-center justify-content-center">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-12 mb-2">
