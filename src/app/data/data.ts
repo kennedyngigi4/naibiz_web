@@ -444,6 +444,38 @@ export const workData = [
         desc:'Once approved, your listing goes live on Nairobi Business. Potential customers can now find your business, leave reviews, and contact you directly.'
     },
 ]
+
+
+export const affiliateProcess = [
+    {
+        icon: BsPerson,
+        title: 'Sign Up',
+        desc: 'Join our affiliate program for free.'
+    },
+    {
+        icon: BsFileArrowUpFill,
+        title: 'Get Your Link',
+        desc: 'Receive your unique affiliate link instantly.'
+    },
+    {
+        icon: BsPatchCheck,
+        title: 'Promote',
+        desc: 'Share your link via social media, blogs, email, or direct outreach.'
+    },
+    {
+        icon: BsPerson,
+        title: 'Earn',
+        desc: 'Get 20% commission for every successful referral.'
+    },
+    {
+        icon: BsFileArrowUpFill,
+        title: 'Get Paid',
+        desc: 'Receive your earnings every Friday directly to your account.'
+    },
+    
+]
+
+
 export const reviewData2 = [
     {
         image:'/img/google.png',

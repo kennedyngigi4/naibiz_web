@@ -17,6 +17,7 @@ import { useSession } from 'next-auth/react'
 import { ListingModel } from '../../../lib/models/all_models'
 import MerchantAPIServices from '../../../lib/services/merchant_api_services'
 import { BsBox2, BsCheck2Circle, BsStarFill, BsStarHalf, BsX } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 
 interface Counter{
     icon: IconType;
@@ -148,7 +149,7 @@ export default function Dashboarduser() {
                                                                     <div className="mngListinlast">
                                                                         <div className="d-flex align-items-center justify-content-start gap-3">
                                                                             <Link href={`/dashboard/edit/${item.slug}`} className="btn btn-sm btn-light-success fw-medium rounded-pill"><BsCheck2Circle className="me-1"/>Edit</Link>
-                                                                            <Link href="#" className="btn btn-sm btn-light-danger fw-medium rounded-pill"><BsX className="me-1"/>Delete</Link>
+                                                                            
                                                                             <Link href={`/dashboard/products/${item.slug}`} className="btn btn-sm btn-light-info fw-medium rounded-pill"><BsBox2 className="me-1" />Products</Link>
                                                                         </div>
                                                                     </div>

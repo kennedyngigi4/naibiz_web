@@ -71,6 +71,7 @@ export default function NavbarDark() {
                             <li className={`${['/about-us'].includes(current) ? 'active' : ''}`}><Link href="/about-us">About Us</Link></li>
                             <li className={`${['/blog'].includes(current) ? 'active' : ''}`}><Link href="/blog">Blogs</Link></li>
                             <li className={`${['/contact-us'].includes(current) ? 'active' : ''}`}><Link href="/contact-us">Contact Us</Link></li>
+                            <li className={`${['/affiliates'].includes(current) ? 'active' : ''}`}><Link href="/affiliates">Affiliates</Link></li>
                             <li className={`${['/faq'].includes(current) ? 'active' : ''}`}><Link href="/faq">FAQs</Link></li>
                             <li><Link href="/auth/register" className="mob-addlisting light" ><BsGeoAltFill className="me-1"/>Add Listing</Link></li>
                         </ul>

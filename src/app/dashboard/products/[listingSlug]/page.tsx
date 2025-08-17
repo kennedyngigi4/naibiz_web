@@ -29,10 +29,12 @@ const ListingProductsPage = () => {
       }
 
       const res = await MerchantAPIServices.get(`businesses/merchant/listing/${params.listingSlug}/`, session?.accessToken);
+      console.log(res);
       setBusinessData(res);
 
       if(res.id){
         const products = await MerchantAPIServices.get(`shop/merchant/business_products/?business=${res?.id}`, session?.accessToken);
+        console.log(products);
         setProductsData(products);
       }
     }
@@ -103,6 +105,7 @@ const ListingProductsPage = () => {
       }
 
       const res = await MerchantAPIServices.post("shop/merchant/upload_product/", session?.accessToken, formData);
+      console.log(res)
       if(res.success){
         toast.success(res.message);
         resetForm();

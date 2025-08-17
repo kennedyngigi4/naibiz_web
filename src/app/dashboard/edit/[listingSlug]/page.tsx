@@ -9,7 +9,7 @@ import AdminNavbar from '@/app/components/navbar/admin-navbar'
 import AdminSidebar from '@/app/components/admin/admin-sidebar'
 
 import { FaFile, FaHeart } from 'react-icons/fa6'
-import { BsArrowRightCircle, BsFeather, BsGeoAlt, BsImages, BsPatchQuestionFill, BsPhoneFlip, BsPlusCircle, BsStopwatch, BsX } from 'react-icons/bs'
+import { BsArrowRightCircle, BsBox2, BsFeather, BsGeoAlt, BsImageAlt, BsImages, BsPatchQuestionFill, BsPhoneFlip, BsPlusCircle, BsStopwatch, BsX } from 'react-icons/bs'
 import BackToTop from '@/app/components/back-to-top'
 import { useSession } from 'next-auth/react'
 import MerchantAPIServices from '../../../../../lib/services/merchant_api_services'
@@ -324,21 +324,28 @@ export default function AddListing() {
 
         const formData = new FormData();
         Object.entries(listingData).forEach(([key, value]) => {
-            formData.append(key, value);
+            // Skip images because they are handled separately
+            if (["profile_image", "main_banner"].includes(key)) return;
+
+            if (value !== "" && value !== null && value !== undefined) {
+                formData.append(key, value);
+            }
         });
+
         buildHoursList().forEach(hour => {
-            formData.append("hours", JSON.stringify(hour));
+            if (hour.opening_time || hour.closing_time) {
+                formData.append("hours", JSON.stringify(hour));
+            }
         });
 
 
 
         // Append files if selected
-        if (profile_image instanceof File) {
-            formData.append("profile_image", profile_image);
+        if (logoImage) {
+            formData.append("profile_image", logoImage);
         }
-
-        if (main_banner instanceof File) {
-            formData.append("main_banner", main_banner);
+        if (bannerImage) {
+            formData.append("main_banner", bannerImage);
         }
 
 
@@ -366,7 +373,19 @@ export default function AddListing() {
     }
 
 
-    const handleProductUpload = async() => {
+    const deleteBusiness = async (id: any) => {
+        if (!session?.accessToken) {
+            throw new Error("You must be logged in.")
+        }
+
+        const res = await MerchantAPIServices.delete(`businesses/merchant/delete/${id}/`, session?.accessToken);
+        if (res.status == "success") {
+            toast.success(res.message);
+            router.push("/dashboard/my-listings");
+        } else {
+            toast.error("Something went wrong.");
+            router.push("/dashboard/my-listings");
+        }
 
     }
 
@@ -391,8 +410,9 @@ export default function AddListing() {
                                 <div className="col-xl-4 col-lg-4 col-md-4 col-12 float-end">
                                     <div className="dashHeader p-xl-5 p-4 pb-xl-0 pb-0 py-lg-0 py-5">
                                         <Link href={`/dashboard/gallery/${businessData?.slug}`}>
-                                        <button className="btn btn-sm btn-light-info fw-medium rounded-pill"><BsImages className='pe-4' /> Add Gallery</button>
+                                        <button className="btn btn-sm btn-light-info fw-medium rounded-pill"><BsImages className='me-1' /> Add Gallery</button>
                                         </Link>
+                                        <Link href={`/dashboard/products/${businessData?.slug}`} className="btn btn-sm btn-light-info fw-medium rounded-pill ms-3"><BsBox2 className="me-1" />Products</Link>
                                     </div>
                                 </div>
                             </div>
@@ -751,6 +771,16 @@ export default function AddListing() {
                                     </div>
                                     
                                 </div>
+
+
+                                <div className='row py-5 bg-white mb-3'>
+                                    <div className="col-lg-6 offset-lg-3 text-center">
+                                        <h1 className='fs-6 text-primary pb-3'>Remove business?</h1>
+                                        
+                                        <button onClick={() => deleteBusiness(businessData?.id)} className="btn btn-sm btn-light-danger fw-medium rounded-pill"><BsX className="me-1" />Delete</button>
+                                    </div>
+                                </div>
+
                                 
                                 <div className="row align-items-start g-4">
                                     <div className="col-xl-12 col-lg-12 col-md-12">
@@ -764,6 +794,7 @@ export default function AddListing() {
                     </div>
                     
                 </div>
+                
             </div>
         </section>
         <BackToTop/>
