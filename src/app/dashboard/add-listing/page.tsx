@@ -76,7 +76,6 @@ export default function AddListing() {
 
     const [ listingData, setListingData ] = useState({
         name: "",
-        mall: "",
         category: "",
         subcategory: "",
         services: "",
@@ -318,7 +317,7 @@ export default function AddListing() {
                                                                 <input type="text" className="form-control rounded" name="name" value={listingData.name} onChange={handelChange} placeholder="e.g. Decathlon Sport House"/>
                                                             </div>
                                                         </div>
-                                                        <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        {/* <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div className="form-group form-border">
                                                               <label className="lableTitle">Mall<BsPatchQuestionFill className="lableTip" data-bs-toggle="tooltip" data-bs-title="Maximum 10 keywords related with business" /></label>
                                                                 <div className="selects">
@@ -330,7 +329,7 @@ export default function AddListing() {
                                                                     />
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div className="form-group form-border">
                                                               <label className="lableTitle">Category<BsPatchQuestionFill className="lableTip" data-bs-toggle="tooltip" data-bs-title="Maximum 10 keywords related with business" /></label>

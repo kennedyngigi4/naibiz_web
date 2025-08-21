@@ -46,7 +46,7 @@ export default function Faq() {
                             <div className="d-flex align-items-start flex-column gap-xl-5 gap-4">
                                 <div className="faqsWraps w-100">
                                     <div className="fasqHeads mb-3">
-                                        <h4>Basic FAQ's Block</h4>
+                                        <h4>Basic FAQ's</h4>
                                     </div>
                                     <div className="faqsCaps">
                                         <div className="accordion accordion-flush" id="accordionFlushExample">

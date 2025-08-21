@@ -48,7 +48,7 @@ export default function AddListing() {
     useEffect(() => {
         const fetchData = async() => {
             if(!session?.accessToken){
-            throw new Error("You must be logged in");
+                throw new Error("You must be logged in");
             }
             const res = await MerchantAPIServices.get(`businesses/merchant/listing/${params.listingSlug}/`, session?.accessToken);
             setBusinessData(res);

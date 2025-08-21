@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import CountUp from 'react-countup'
 
-import { affiliateProcess, counterData, workData } from '@/app/data/data'
+import { affiliateProcess, counterData, faqAffiliates, faqData1, workData } from '@/app/data/data'
 
 import { MdArrowForwardIos } from 'react-icons/md'
 import { BsCaretRight, BsPlayCircleFill } from 'react-icons/bs'
@@ -26,6 +26,13 @@ interface CounterData{
 
 interface WorkData{
     icon: IconType;
+    title: string;
+    desc: string;
+}
+
+
+interface FaqData {
+    id: string;
     title: string;
     desc: string;
 }
@@ -102,7 +109,7 @@ export default function AboutUs() {
             </div>
         </section>
 
-          <section className="bg-cover" style={{ backgroundImage:`url('/images/bg/affiliates.jpeg')`, backgroundColor:'#ffffff'}} data-overlay="5">
+          <section className="bg-cover" style={{ backgroundImage:`url('/images/bg/affiliates2.jpeg')`, backgroundColor:'#ffffff'}} data-overlay="5">
             <div className="container">
                 <div className="row">
                     <div className="row justify-content-center align-items-center mb-5">
@@ -177,19 +184,40 @@ export default function AboutUs() {
             </div>
         </section>
 
-        {/* <section>
+        <section>
             <div className="container">
                 <div className="row align-items-center justify-content-center">
                     <div className="col-xl-7 col-lg-8 col-md-11 col-sm-12">
-                        <div className="secHeading-wrap text-center">
-                            <h3 className="sectionHeading">Meet Our Great <span className="text-primary">Experts</span></h3>
-                            <p>Explore our team and contact for any types of help if you needs.</p>
+                        <div className="d-flex align-items-start flex-column gap-xl-5 gap-4">
+                            <div className="faqsWraps w-100">
+                                <div className="fasqHeads mb-3">
+                                    <h4>Affiliate FAQ's</h4>
+                                </div>
+                                <div className="faqsCaps">
+                                    <div className="accordion accordion-flush" id="accordionFlushExample">
+                                        {faqAffiliates.map((item: FaqData, index: number) => {
+                                            return (
+                                                <div className="accordion-item" key={index}>
+                                                    <h2 className="accordion-header rounded-2">
+                                                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-${item.id}`} aria-expanded="false" aria-controls={`#flush-${item.id}`}>
+                                                            {item.title}
+                                                        </button>
+                                                    </h2>
+                                                    <div id={`flush-${item.id}`} className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                        <div className="accordion-body">{item.desc}</div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <TeamOne/>
+                {/* <TeamOne/> */}
             </div>
-        </section> */}
+        </section>
 
         <FooterTop/>
         <Footer/>

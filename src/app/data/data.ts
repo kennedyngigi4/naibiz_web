@@ -343,11 +343,38 @@ export const blogData = [
     },
 ]
 
-export const footerLink1  = ['About Nairobi Business','Submit Listing','Nairobi Business Report','Careers']
+export const footerLink1  = [
+    {
+        title: 'About Nairobi Business',
+        link: '/about-us'
+    },
+    {
+        title: 'Submit Listing',
+        link: '/dashboard'
+    },
+]
 
-export const footerLink2  = ['Trust & Safety','Investor Relations','Terms of Services','Paid Advertising','Our Blogs']
+export const footerLink2  = [
+    {
+        title: 'Our Blogs',
+        link: '/blog'
+    },
+    {
+        title: 'Terms of Services',
+        link: '/terms-conditions'
+    },
+]
 
-export const footerLink3  = ['Trust & Safety','Investor Relations','Terms of Services','Paid Advertising','Our Blogs']
+export const footerLink3  = [ 
+    {
+        title: 'Our Blogs',
+        link: '/blog'
+    },
+    {
+        title: 'Terms of Services',
+        link: '/terms-conditions'
+    },
+]
 
 export const cityData = [
     {
@@ -1035,6 +1062,64 @@ export const faqData1 = [
         desc: `Yes, we offer several advertising options including featured listings, banner ads, and category sponsorships. Contact us for a custom quote.`
     },
 ]
+
+
+
+export const faqAffiliates = [
+    {
+        id: 'collapseOne',
+        title: 'How much commission will I earn?',
+        desc: `You earn 20% commission for every sale made through your referral link.`
+    },
+    {
+        id: 'collapseTwo',
+        title: 'How often do you pay affiliates?',
+        desc: `Payments are made every Friday directly to your preferred payment method.`
+    },
+    {
+        id: 'collapseThree',
+        title: 'Is there a limit to how much I can earn?',
+        desc: `No — your earnings are unlimited. The more businesses you refer, the more you make.`
+    },
+    {
+        id: 'collapseFour',
+        title: 'How can I earn KSh 100,000 per month?',
+        desc: `By referring just 20 premium listings (packages above KSh 15,000) per month, you could earn KSh 60,000+, and with a few higher-tier packages, you can easily cross KSh 100,000.`
+    },
+    {
+        id: 'collapseFive',
+        title: 'Are there higher-priced packages?',
+        desc: `Yes. We have packages higher than KSh 15,000, meaning you can earn even more per referral.`
+    },
+    {
+        id: 'collapseSix',
+        title: 'Do I need a website to join?',
+        desc: `No — you can promote using social media, email, word of mouth, or any channel you prefer.`
+    },
+    {
+        id: 'collapseSeven',
+        title: 'How will I know if my referral purchased a package?',
+        desc: `You’ll have access to your affiliate dashboard where you can track all clicks, sales, and commissions in real time.`
+    },
+    {
+        id: 'collapseEight',
+        title: 'Is joining the affiliate program free?',
+        desc: `Yes — there are no signup fees or hidden charges.`
+    },
+    {
+        id: 'collapseNine',
+        title: 'How soon can I start earning?',
+        desc: `Immediately after you sign up and start sharing your referral link.`
+    },
+    {
+        id: 'collapseTen',
+        title: 'Is the 20% commission calculated on the total price including VAT?',
+        desc: `No. The 20% commission is calculated on the base price of the package, excluding the 16% VAT amount. For example, if a package costs KSh 15,000 + VAT, your commission will be based on the KSh 15,000 and not the total amount including VAT.`
+    },
+    
+]
+
+
 export const faqData2 = [
     {
         id:'collapseOne2',

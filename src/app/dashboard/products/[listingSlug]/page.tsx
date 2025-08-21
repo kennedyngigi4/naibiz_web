@@ -29,12 +29,10 @@ const ListingProductsPage = () => {
       }
 
       const res = await MerchantAPIServices.get(`businesses/merchant/listing/${params.listingSlug}/`, session?.accessToken);
-      console.log(res);
       setBusinessData(res);
 
       if(res.id){
         const products = await MerchantAPIServices.get(`shop/merchant/business_products/?business=${res?.id}`, session?.accessToken);
-        console.log(products);
         setProductsData(products);
       }
     }
@@ -118,6 +116,24 @@ const ListingProductsPage = () => {
 
   }
 
+
+  const handleDelete = async(id: any) => {
+    if(id){
+      if (!session?.accessToken) {
+        throw new Error("You must be logged in");
+      }
+
+      const res = await MerchantAPIServices.delete(`shop/merchant/delete-product/${id}`, session?.accessToken);
+      if (res.success) {
+        toast.success(res.message);
+        window.location.reload();
+      } else {
+        toast.error(res.message);
+        window.location.reload();
+      }
+    }
+  }
+
   return (
     <>
       <AdminNavbar/>
@@ -155,7 +171,7 @@ const ListingProductsPage = () => {
                               </div>
                               <h6 className='text-truncate'>{product.name}</h6>
                               <p> KSh {parseInt(product.price).toLocaleString()}</p>
-                              <button className='btn btn-xs rounded btn-dark'><BsTrash /> Delete</button>
+                              <button className='btn btn-xs rounded btn-dark' onClick={() => handleDelete(product.id)}><BsTrash /> Delete</button>
                             </div>
                           ))}
 

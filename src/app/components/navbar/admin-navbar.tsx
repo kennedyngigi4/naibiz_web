@@ -87,6 +87,7 @@ export default function AdminNavbar() {
                             <li className={`${['/blogs'].includes(current) ? 'active' : ''}`}><Link href="/blogs">Blogs</Link></li>
 
                             <li className={`${['/contact-us'].includes(current) ? 'active' : ''}`}><Link href="/contact-us">Contact Us</Link></li>
+                            <li className={`${['/affiliates'].includes(current) ? 'active' : ''}`}><Link href="/affiliates">Affiliates</Link></li>
                             <li className={`${['/faq'].includes(current) ? 'active' : ''}`}><Link href="/faq">FAQs</Link></li>
                             
                             

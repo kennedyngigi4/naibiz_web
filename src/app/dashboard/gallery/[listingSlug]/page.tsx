@@ -8,6 +8,8 @@ import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import MerchantAPIServices from '../../../../../lib/services/merchant_api_services';
 import { ListingModel } from '../../../../../lib/models/all_models';
+import { BsTrash } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 
 
 
@@ -103,7 +105,22 @@ const GalleryPage = () => {
     };
 
 
-   
+    const handleDelete = async(id: any) => {
+        if (id) {
+            if (!session?.accessToken) {
+                throw new Error("You must be logged in");
+            }
+
+            const res = await MerchantAPIServices.delete(`businesses/merchant/delete-gallery/${id}/`, session?.accessToken);
+            if (res.success) {
+                toast.success(res.message);
+                window.location.reload();
+            } else {
+                toast.error(res.message);
+                window.location.reload();
+            }
+        }
+    }
 
   return (
     <>
@@ -176,7 +193,7 @@ const GalleryPage = () => {
                                         <div className='row'>
                                           {gallery.map((image: any) => (
                                               <div key={image?.id} className="col-xl-3 col-lg-4 col-md-6 col-12">
-                                                  <div className="card border-0 shadow-sm h-100">
+                                                  <div className="card border-0 shadow-sm h-100 position-relative">
                                                       <div className="ratio ratio-1x1">
                                                           <img
                                                               src={image.image}
@@ -184,6 +201,7 @@ const GalleryPage = () => {
                                                               alt="image"
                                                           />
                                                       </div>
+                                                      <button className='btn btn-xs rounded btn-dark position-absolute bottom-0 right-0' onClick={() => handleDelete(image.id)}><BsTrash /> Delete</button>
                                                   </div>
                                               </div>
                                           ))}

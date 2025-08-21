@@ -17,7 +17,7 @@ export default function Footer() {
                         <div className="footer-widget pe-xl-4 mb-5">
                             {/* <div className="footerLogo"><Image src='/logo.png' width={0} height={0} sizes='100vw' style={{width:'160px', height:'auto'}} className="img-fluid"  alt="Footer Logo"/></div> */}
                             {/* with <FaHeart className="ms-1 text-danger"></FaHeart> */}
-                          <div className="footerText"><p>© {new Date().getFullYear()} Nairobi Business. <br /> Developed By <a href="https://savannahsoftwaresolutions.co.ke/" className='text-primary' target="_blank" rel="noopener noreferrer">Savannah Software Solutions</a></p></div>
+                          <div className="footerText"><p>© {new Date().getFullYear()} Binary Business Directory. <br /> Developed By <a href="https://savannahsoftwaresolutions.co.ke/" className='text-primary' target="_blank" rel="noopener noreferrer">Savannah Software Solutions</a></p></div>
                             <div className="footerSocialwrap">
                                 <ul className="footersocial">
                                     <li><Link href="#" className="social-link"><FaFacebookF className=""/></Link></li>
@@ -33,9 +33,9 @@ export default function Footer() {
                         <div className="footer-widget mb-5 mb-md-5 mb-lg-0">
                             <h4 className="widget-title text-pri">Community</h4>
                             <ul className="footer-menu">
-                                {footerLink1.map((item,index)=>{
+                                {footerLink1.map((item: any,index)=>{
                                     return(
-                                        <li key={index}><Link href="#">{item}</Link></li>
+                                        <li key={index}><Link href={item.link}>{item.title}</Link></li>
                                     )
                                 })}
                             </ul>
@@ -46,9 +46,9 @@ export default function Footer() {
                         <div className="footer-widget mb-5 mb-md-5 mb-lg-0">
                             <h4 className="widget-title">Getting Started</h4>
                             <ul className="footer-menu">
-                                {footerLink2.map((item,index)=>{
+                                {footerLink2.map((item: any,index)=>{
                                     return(
-                                        <li key={index}><Link href="#">{item}</Link></li>
+                                        <li key={index}><Link href={item.link}>{item.title}</Link></li>
                                     )
                                 })}
                             </ul>
@@ -59,9 +59,9 @@ export default function Footer() {
                         <div className="footer-widget">
                             <h4 className="widget-title">ListingHub Business</h4>
                             <ul className="footer-menu">
-                                {footerLink3.map((item,index)=>{
+                                {footerLink3.map((item: any,index)=>{
                                     return(
-                                        <li key={index}><Link href="/terms-conditions">{item}</Link></li>
+                                        <li key={index}><Link href={item.link}>{item.title}</Link></li>
                                     )
                                 })}
                             </ul>
