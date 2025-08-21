@@ -1,10 +1,16 @@
 import NextAuth, { JWT } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
+import GoogleProvider from "next-auth/providers/google";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 
     providers: [
+
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
+
         Credentials({
             credentials: {
                 email: {},
@@ -38,12 +44,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     callbacks: {
         async jwt({ token, user, account }) {
+
+
+            // credentials
             if (account && user) {
                 token.accessToken = user?.access;
                 token.id = user?.id;
                 token.name = user?.fullname ?? undefined;
                 token.role = user?.role;
             }
+
+
+            // google
+            // From Google provider → exchange ID token with DRF
+            if (account?.provider === "google" && account.id_token) {
+                const res = await fetch(`${process.env.APIURL}/account/google-login/`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token: account.id_token }),
+                })
+
+                const data = await res.json()
+                if (res.ok && data.access) {
+                    token.accessToken = data.access;
+                    token.id = data.id;
+                    token.name = data.fullname;
+                    token.role = data.role;
+                } else {
+                    throw new Error(data.error || "Google login failed")
+                }
+            }
+
+
             return token;
         },
         async session({ session, token }) {

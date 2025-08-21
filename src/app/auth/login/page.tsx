@@ -8,6 +8,7 @@ import  { loginUser } from '../../../../lib/services/auth_services';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { getSession } from 'next-auth/react';
+import { signIn } from "next-auth/react";
 
 export default function Login() {
 
@@ -129,10 +130,10 @@ export default function Login() {
                                             <div className="social-login">
                                                 <div className="d-flex align-items-center justify-content-center flex-wrap gap-3 p-0">
                                                     <div className="flex-first flex-fill mob-100">
-                                                        <Link href="#" className="btn bg-white border  text-dark full-width">
+                                                      <button type="button" onClick={() => signIn("google")} className="btn bg-white border  text-dark full-width">
                                                             <FaGooglePlusG className="color--googleplus me-2"/>
                                                             <span className="fw-medium text-md">Signin with Google</span>
-                                                        </Link>
+                                                        </button>
                                                     </div>
                                                     
                                                 </div>

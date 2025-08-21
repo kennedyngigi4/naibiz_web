@@ -233,28 +233,7 @@ export default function Register() {
                                                 </div>
                                             </div>
                                             
-                                            <div className="prixer my-5">
-                                                <div className="devider-wraps position-relative">
-                                                    <div className="devider-text text-muted text-md">Or Signup with</div>
-                                                </div>
-                                            </div>
                                             
-                                            <div className="social-login">
-                                                <div className="d-flex align-items-center justify-content-center flex-wrap gap-3 p-0">
-                                                    <div className="flex-first flex-fill mob-100">
-                                                        <Link href="#" className="btn bg-white border text-dark full-width">
-                                                            <FaGooglePlusG className="color--googleplus me-2"/>
-                                                            <span className="fw-medium text-md">Signup with Google</span>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="flex-last flex-fill mob-100">
-                                                        <Link href="#" className="btn bg-white border text-dark full-width">
-                                                            <FaFacebookF className="color--facebook me-2"/>
-                                                            <span className="fw-medium text-md">Signup with Facebook</span>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             
                                         </form>
                                     </div>
