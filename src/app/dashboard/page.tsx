@@ -51,7 +51,6 @@ export default function Dashboarduser() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (status === "loading") return <p>Loading...</p>;
             if (!session?.accessToken) {
                 throw new Error("You must be logged in.")
             } else if(session?.user?.role == "professional") {

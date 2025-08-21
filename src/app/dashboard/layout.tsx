@@ -25,9 +25,7 @@ const DashboardLayout = ({ children}: { children: React.ReactNode}) => {
 
     }, [status, router]);
 
-    // if(!isReady){
-    //     return <div className='text-center'>Loading ...</div>
-    // }
+    
 
     return (
         <div>{children}</div>

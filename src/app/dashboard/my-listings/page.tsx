@@ -32,7 +32,7 @@ export default function MyListings() {
 
     useEffect(() => {
         const fetchData = async() => {
-            if(status === "unauthenticated") return;
+            
             if(!session?.accessToken){
                 throw new Error("You must be logged in.")
             }
