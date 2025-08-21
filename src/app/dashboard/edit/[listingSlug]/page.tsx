@@ -752,10 +752,7 @@ export default function AddListing() {
                                                         </div>
                                                     </div>
                                                     
-                                                    {/* <div className="form-check mt-4 ps-5">
-                                                        <input id="t24" className="form-check-input" name="24-1" type="checkbox"/>
-                                                        <label htmlFor="t24" className="form-check-label text-dark">This Business open 7x24</label>
-                                                    </div> */}
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -777,7 +774,7 @@ export default function AddListing() {
                                     <div className="col-lg-6 offset-lg-3 text-center">
                                         <h1 className='fs-6 text-primary pb-3'>Remove business?</h1>
                                         
-                                        <button onClick={() => deleteBusiness(businessData?.id)} className="btn btn-sm btn-light-danger fw-medium rounded-pill"><BsX className="me-1" />Delete</button>
+                                        <button type="button" onClick={() => deleteBusiness(businessData?.id)} className="btn btn-sm btn-light-danger fw-medium rounded-pill"><BsX className="me-1" />Delete</button>
                                     </div>
                                 </div>
 
