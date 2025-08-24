@@ -55,7 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 const data = await res.json();
 
                 if (res.ok && data.access) {
-                    // ✅ Login allowed
+                    (account as any).apiData = data;
                     return true;
                 } else {
                     // ❌ Block login with a known reason
@@ -76,6 +76,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.id = user?.id;
                 token.name = user?.fullname ?? undefined;
                 token.role = user?.role;
+            }
+
+
+            // Google signin
+            if(account?.provider === "google" && (account as any).apiData){
+                const data = (account as any).apiData;
+                token.accessToken = data?.access;
+                token.id = data?.id;
+                token.name = data?.fullname ?? undefined;
+                token.role = data?.role;
             }
 
 

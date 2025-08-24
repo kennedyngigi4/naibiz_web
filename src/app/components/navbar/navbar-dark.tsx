@@ -77,7 +77,7 @@ export default function NavbarDark() {
                                 {session?.user?.name ? (
                                     <Link href="/dashboard" className="mob-addlisting light"><BsPerson className="fs-6 me-1" />Hi {session?.user?.name}</Link>
                                 ) : (
-                                    <Link href="/auth/register" className="mob-addlisting light" ><BsGeoAltFill className="me-1"/>Add List</Link>
+                                    <Link href="/auth/register" className="mob-addlisting light" ><BsGeoAltFill className="me-1"/>Add Listing</Link>
                                 )}
                             </li>
                              
