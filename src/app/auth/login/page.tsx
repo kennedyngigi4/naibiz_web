@@ -62,6 +62,17 @@ export default function Login() {
         }
     }
 
+
+    const handleGoogleLogin = async() => {
+        const result = await signIn("google");
+
+        if(result?.error === "unregistered"){
+            toast.error("You must signup first.");
+        } else if(result?.error){
+            toast.error("Something went wrong.");
+        }
+    }
+
   return (
         <section style={{backgroundImage:`url('/img/auth-bg.png')`, backgroundPosition:'center', backgroundRepeat:'no-repeat', backgroundColor:'#ffe8ee' , backgroundSize:'cover'}}>
             <div className="container">
@@ -130,7 +141,7 @@ export default function Login() {
                                             <div className="social-login">
                                                 <div className="d-flex align-items-center justify-content-center flex-wrap gap-3 p-0">
                                                     <div className="flex-first flex-fill mob-100">
-                                                      <button type="button" onClick={() => signIn("google")} className="btn bg-white border  text-dark full-width">
+                                                      <button type="button" onClick={handleGoogleLogin} className="btn bg-white border  text-dark full-width">
                                                             <FaGooglePlusG className="color--googleplus me-2"/>
                                                             <span className="fw-medium text-md">Signin with Google</span>
                                                         </button>

@@ -83,9 +83,9 @@ export default function List({ business }: ListProps) {
                                     <div className="singlelisting-item bg-light border-0">
                                         <div className="listing-top-item">
                                             <div className="position-absolute end-0 top-0 me-3 mt-3 z-2">
-                                                <Link href="#" className="bookmarkList" data-bs-toggle="tooltip" data-bs-title="Save Listing"><BsSuitHeart className="m-0"/></Link>
+                                                <Link href={`/${item.slug}`} className="bookmarkList" data-bs-toggle="tooltip" data-bs-title="Save Listing"><BsSuitHeart className="m-0"/></Link>
                                             </div>
-                                            <Link href="#" className="topLink">
+                                            <Link href={`/${item.slug}`} className="topLink">
                                                 <div className="position-absolute start-0 top-0 ms-3 mt-3 z-2">
                                                     <div className="d-flex align-items-center justify-content-start gap-2">
                                                         {item.is_open ? (<span className="badge badge-xs text-uppercase listOpen">Open</span>) :(<span className="badge badge-xs text-uppercase listClose">Closed</span>)}
@@ -102,10 +102,10 @@ export default function List({ business }: ListProps) {
                                             <div className="opssListing position-absolute start-0 bottom-0 ms-3 mb-4 z-2">
                                                 <div className="d-flex align-items-center justify-content-between gap-2">
                                                     <div className="listing-avatar">
-                                                        <Link href="#" className="avatarImg"><Image src={item.profile_image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid circle" alt="Avatar"/></Link>
+                                                        <Link href={`/${item.slug}`} className="avatarImg"><Image src={item.profile_image} width={0} height={0} sizes='100vw' style={{width:'100%', height:'100%'}} className="img-fluid circle" alt="Avatar"/></Link>
                                                     </div>
                                                     <div className="listing-details">
-                                                        <h4 className="listingTitle"><Link href="#" className="titleLink">{item.name}<span className="verified"><BsPatchCheckFill className="bi bi-patch-check-fill m-0"/></span></Link></h4>
+                                                        <h4 className="listingTitle"><Link href={`/${item.slug}`} className="titleLink">{item.name}<span className="verified"><BsPatchCheckFill className="bi bi-patch-check-fill m-0"/></span></Link></h4>
                                                         <div className="list-infos">
                                                             <div className="gap-3 mt-1">
                                                                 <div className="list-distance text-light d-flex align-items-center"><BsGeoAlt className="mb-0 me-2"/>{item.location}</div>
@@ -120,7 +120,7 @@ export default function List({ business }: ListProps) {
                                             <div className="d-flex align-items-center justify-content-between gap-2">
                                                 <div className="catdWraps">
                                                     <div className="flex-start">
-                                                        <Link href="#" className="d-flex align-items-center justify-content-start gap-2">
+                                                        <Link href={`/${item.slug}`} className="d-flex align-items-center justify-content-start gap-2">
                                                             {/* <span className={item.tagIconStyle}><Icon className=""></Icon></span> */}
                                                             <span className="catTitle">{item.category_name}</span>
                                                         </Link>

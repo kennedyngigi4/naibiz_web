@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react'
 import { usePathname,useRouter } from 'next/navigation'
 
-import { BsPersonCircle,BsBasket2,BsSearch, BsGeoAlt, BsSpeedometer, BsPersonLinesFill, BsJournalCheck, BsUiRadiosGrid, BsBookmarkStar, BsChatDots, BsYelp, BsWallet, BsPatchPlus, BsBoxArrowInRight, BsPersonPlus, BsQuestionCircle, BsShieldCheck, BsPersonVcard, BsCalendar2Check, BsPersonCheck, BsBlockquoteLeft, BsEnvelopeCheck, BsCoin, BsPatchQuestion, BsHourglassTop, BsInfoCircle, BsXOctagon, BsGear, BsGeoAltFill, BsX, } from "react-icons/bs";
+import { BsPersonCircle,BsBasket2,BsSearch, BsGeoAlt, BsSpeedometer, BsPersonLinesFill, BsJournalCheck, BsUiRadiosGrid, BsBookmarkStar, BsChatDots, BsYelp, BsWallet, BsPatchPlus, BsBoxArrowInRight, BsPersonPlus, BsQuestionCircle, BsShieldCheck, BsPersonVcard, BsCalendar2Check, BsPersonCheck, BsBlockquoteLeft, BsEnvelopeCheck, BsCoin, BsPatchQuestion, BsHourglassTop, BsInfoCircle, BsXOctagon, BsGear, BsGeoAltFill, BsX, BsPerson, } from "react-icons/bs";
 import { FiX } from 'react-icons/fi';
 import { BiSolidShoppingBagAlt } from 'react-icons/bi'
 import Link from 'next/link';
@@ -73,7 +73,14 @@ export default function NavbarDark() {
                             <li className={`${['/contact-us'].includes(current) ? 'active' : ''}`}><Link href="/contact-us">Contact Us</Link></li>
                             <li className={`${['/affiliates'].includes(current) ? 'active' : ''}`}><Link href="/affiliates">Affiliates</Link></li>
                             <li className={`${['/faq'].includes(current) ? 'active' : ''}`}><Link href="/faq">FAQs</Link></li>
-                            <li><Link href="/auth/register" className="mob-addlisting light" ><BsGeoAltFill className="me-1"/>Add Listing</Link></li>
+                            <li>
+                                {session?.user?.name ? (
+                                    <Link href="/dashboard" className="mob-addlisting light"><BsPerson className="fs-6 me-1" />Hi {session?.user?.name}</Link>
+                                ) : (
+                                    <Link href="/auth/register" className="mob-addlisting light" ><BsGeoAltFill className="me-1"/>Add List</Link>
+                                )}
+                            </li>
+                             
                         </ul>
 
                         <ul className="nav-menu nav-menu-social align-to-right text-white">
