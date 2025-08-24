@@ -43,6 +43,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 
     callbacks: {
+
+        async signIn({ account }) {
+            if (account?.provider === "google" && account.id_token) {
+                const res = await fetch(`${process.env.APIURL}/account/google-login/`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token: account.id_token }),
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.access) {
+                    // ✅ Login allowed
+                    return true;
+                } else {
+                    // ❌ Block login with a known reason
+                    throw new Error("unregistered");
+                }
+            }
+
+            return true; // credentials login path etc.
+        },
+
+
         async jwt({ token, user, account }) {
 
 
@@ -52,27 +76,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.id = user?.id;
                 token.name = user?.fullname ?? undefined;
                 token.role = user?.role;
-            }
-
-
-            // google
-            // From Google provider → exchange ID token with DRF
-            if (account?.provider === "google" && account.id_token) {
-                const res = await fetch(`${process.env.APIURL}/account/google-login/`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ token: account.id_token }),
-                })
-
-                const data = await res.json()
-                if (res.ok && data.access) {
-                    token.accessToken = data.access;
-                    token.id = data.id;
-                    token.name = data.fullname;
-                    token.role = data.role;
-                } else {
-                    throw new Error(data.error || "Google login failed")
-                }
             }
 
 
